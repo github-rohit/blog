@@ -14,7 +14,7 @@
 		<ul class="nav navbar-nav navbar-right" ng-if="NAV.Authentication">
 			<li ng-class="{show: NAV.showDropDown}">
 				<a href="user/settings" ng-click="NAV.show()">{{NAV.currentUser.name}} <i class="fa fa-angle-down"></i></a>
-				<ul class="hide">
+				<ul class="dropdown-menu">
 					<li><a href="user/profile">MY ACCOUNT</a></li>
 					<li><a href="user/logout">LOGOUT</a></li>
 				</ul>
