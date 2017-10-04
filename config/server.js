@@ -9,6 +9,7 @@ var flash = require('connect-flash');
 var mongoose = require('mongoose');
 
 var config = require('./config');
+var config = require('./index');
 var date = new Date();
 
 module.exports =  function(app) {
