@@ -9,7 +9,7 @@ var flash = require('connect-flash');
 var mongoose = require('mongoose');
 
 var config = require('./config');
-var config = require('./index');
+var dbConnection = require('./index');
 var date = new Date();
 
 module.exports =  function(app) {
@@ -57,5 +57,5 @@ module.exports =  function(app) {
 	app.use(passport.session());
 	app.use(cookieParser());
 
-	mongoose.connect(config.getDbConnectionString());
+	mongoose.connect(dbConnection.getDbConnectionString());
 };
