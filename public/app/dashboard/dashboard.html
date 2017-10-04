@@ -1,0 +1,15 @@
+<div class="container">
+	<div class="nav">
+		<ul class="nav ui-tabs">
+			<li><a href="javascript:void(0)" class="active" ng-click="DC.getPosts(1)"ng-class="{active: DC.activeTab === 'all'}">ALL</a></li>
+			<li><a href="javascript:void(0)" ng-click="DC.getPosts(1, 'published')" ng-class="{active: DC.activeTab === 'published'}">PUBLISHED</a></li>
+			<li><a href="javascript:void(0)" ng-click="DC.getPosts(1, 'save')"ng-class="{active: DC.activeTab === 'save'}">DRAFT</a></li>
+		</ul>
+	</div>
+	<post-list posts="DC.posts" owner="true" publish="DC.publish({id: id, index: index})"></post-list>
+	<pagination pager="DC.pager" set-page="DC.setPage({page: page})"></pagination>
+</div>
+<a href="/create" class="btn btn-success floating-plus ripple" title="Add new post">+</a>
+
+<div class="alert alert-success alert-fixed" ng-if="DC.success"><i class="fa fa-check"></i> Post published successfully.<a class="close" data-dismiss="alert" href="#" aria-hidden="true" ng-click="DC.success = false">&times;</a></div>
+<div class="alert alert-danger alert-fixed" ng-if="DC.error">:( OOPS something went wrong please try again later.<a class="close" data-dismiss="alert" href="#" aria-hidden="true" ng-click="DC.error = false">&times;</a></div>

@@ -1,0 +1,75 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="card">
+				<div class="card-heading card-padding">
+					<h1>Sign In</h1>
+				</div>
+				<div class="card-body card-padding" ng-if="RC.userSuccess">
+					<div class="alert alert-success">
+						<h1><i class="fa fa-smile-o"></i></h1>
+						<h4> Congratulations!</h4>
+						 <p>You have successfully signup. Please goto <a href="/user/login">login</a> page.</p>
+					</div>
+				</div>
+				<div class="card-body card-padding" ng-if="!RC.userSuccess">
+					<form class="angular-form" ng-submit="RC.submit()" name="register" novalidate>
+					<div class="form-group">
+						<div class="form-line">
+								<label class="form-label">Email<span>*</span></label>
+								<input type="email" name="email" class="form-control" ng-model="RC.formData.email" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required/>
+						</div>
+						<p ng-show="(!register.email.$valid && register.email.$touched) || formError['email']" class="text-danger">
+							<span ng-if="register.email.$error.required || (RC.formError['email'] && RC.formError['email'] == 'required')"> {{ RC.formValidateMsg.required }}</span>
+							<span ng-if="register.email.$error.email || (RC.formError['email'] && RC.formError['email'] == 'email')">{{ RC.formValidateMsg.email }}</span>
+						</p>
+						<p ng-if="RC.emailunameTaken.email" class="text-danger">{{ RC.formValidateMsg.emailTaken }}</p>
+					</div>
+					<div class="form-group">
+						<div class="form-line">
+								<label class="form-label">Full Name<span>*</span></label>
+								<input type="text" name="name" class="form-control" ng-model="RC.formData.name" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required/>
+						</div>
+						<p ng-show="(!register.name.$valid && register.name.$touched) || RC.formError['name']" class="text-danger">{{ RC.formValidateMsg.required }}</p>
+					</div>
+					<div class="form-group">
+						<div class="form-line">
+								<label class="form-label">Choose your username<span>*</span></label>
+								<input type="text" name="uname" class="form-control" ng-model="RC.formData.uname" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required/>
+						</div>
+						<p ng-show="(!register.uname.$valid && register.uname.$touched) || RC.formError['uname']" class="text-danger">{{ RC.formValidateMsg.required }}</p>
+						<p ng-if="RC.emailunameTaken.uname" class="text-danger">{{ RC.formValidateMsg.unameTaken }}</p>
+					</div>
+					<div class="form-group">
+						<div class="form-line">
+								<label class="form-label">Gender<span>*</span></label>
+								<select name="gender" class="form-control" ng-model="RC.formData.gender" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required>
+									<option value="male">Male</option>
+									<option value="female">Female</option>
+									<option value="other">Other</option>
+								</select>
+						</div>
+						<p ng-show="(!register.gender.$valid && register.gender.$touched) || RC.formError['gender']" class="text-danger">{{ RC.formValidateMsg.required }}</p>
+					</div>	
+					<div class="form-group">
+						<div class="form-line">
+								<label class="form-label">Create a password<span>*</span></label>
+								<input type="password" name="passwd" class="form-control" ng-model="RC.formData.passwd" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required/>
+						</div>
+						<p ng-show="(!register.passwd.$valid && register.passwd.$touched) || RC.formError['passwd']" class="text-danger">{{ RC.formValidateMsg.required }}</p>
+					</div>	
+					<div class="form-group">
+						<div class="form-line">
+								<label class="form-label">Confirm your password<span>*</span></label>
+								<input type="password" name="passwdAgain" class="form-control" ng-model="RC.formData.passwdAgain" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required/>
+						</div>
+						<p ng-show="(!register.passwdAgain.$valid && register.passwdAgain.$touched) || RC.formError['passwdAgain']" class="text-danger">{{ RC.formValidateMsg.passwdAgain }}</p>
+					</div>	
+					<p class="text-info">* fields are required</p>
+					<input type="submit" class="btn btn-success" value="Submit" ng-disabled="register.$invalid && !(formData.passwd && formData.passwdAgain && formData.passwd != formData.passwdAgain ) "/>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

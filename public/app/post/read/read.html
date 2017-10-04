@@ -1,0 +1,47 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-9">
+			<div class=" ui-post-page">
+				<h1>{{BRC.post.title}}</h1>
+				<p class="byline"><strong>By</strong> <a href="/createdBy/{{BRC.post.owner}}">{{BRC.post.owner}}</a> <i class="fa fa-circle"></i> {{BRC.post.date | amUtc | amDateFormat:'MMMM Do YYYY'}}</p>
+				<div ng-bind-html="BRC.post.description" class="description"></div>
+			</div>
+			<div class="ui-add-comment">
+				<div class="ui-add-comment-header">
+					<h4 ng-if="BRC.comments.list.length">{{BRC.comments.list.length}} Comments</h4>
+				</div>
+				<div class="ui-add-comment-body">
+					<div class="alert alert-danger" ng-if="BRC.comments.error">Error fetching comment list.</div>
+					<ul class="list-unstyled">
+						<li ng-repeat="item in BRC.comments.list">
+							<p>{{item.comment}}</p>
+							<div class="byline"><strong>By</strong> <a href="/createdBy/{{item.createdBy}}">{{item.createdBy}}</a> <i class="fa fa-circle"></i> {{BRC.post.date | amUtc | amDateFormat:'MMMM Do YYYY'}}</div>
+						</li>
+					</ul>
+				</div>
+				<div class="ui-add-comment-footer">
+					<div class="alert alert-danger" ng-if="BRC.frm.error">Error saving comment.</div>
+					<form class="angular-form" name="addComment" ng-submit="BRC.submit()" novalidate ng-if="BRC.isLogin">
+						<div class="form-group">
+							<div class="form-line">
+								<textarea name="comment" rows="4" ng-model="BRC.frm.comment" class="form-control" placeholder="Enter Comment"></textarea>
+							</div><p ng-show="(!addComment.comment.$valid && addComment.comment.$touched) || BRC.frm.errors['comment']" class="text-danger">{{ BRC.frm.msg.required }}</p>
+						</div>
+						<input type="submit" class="btn btn-success" value="Submit" ng-disabled="!BRC.frm.comment">
+					</form>			
+					<div ng-if="!BRC.isLogin">Please <a href="/user/login" target="_blank">login</a> for add Comment. </div>		
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<h4>Categories</h4>
+			<ul class="ui-post-cat">
+				<li ng-repeat="(key, label) in BRC.category"><a href="/category/{{key}}">{{label}}</a></li>
+			</ul>
+			<h4>Tags</h4>
+			<ul class="ui-post-cat">
+				<li ng-repeat="(key, label) in BRC.tags"><a href="/tags/{{key}}">{{label}}</a></li>
+			</ul>
+		</div>
+	</div>
+</div>

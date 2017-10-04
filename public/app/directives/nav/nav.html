@@ -1,0 +1,25 @@
+<nav class="navbar navbar-default">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/"><img height="30" src="/assets/img/logo.png" alt="oogwave"><span>BLOG</span></a>
+		</div>
+		<ul class="nav navbar-nav navbar-right" ng-if="!NAV.Authentication">
+			<li ng-class="NAV.getClass('/user/login')"><a href="user/login">LOGIN</a></li>
+			<li ng-class="NAV.getClass('/user/register')"><a href="user/register">SIGN UP</a></li>
+		</ul>
+		<ul class="nav navbar-nav">
+			<li ng-class="NAV.getClass('/')"><a href="/">HOME</a></li>
+			<li ng-class="NAV.getClass('/dashboard')" ng-if="NAV.Authentication"><a href="/dashboard">MY POSTS</a></li>
+		</ul>
+		<ul class="nav navbar-nav navbar-right" ng-if="NAV.Authentication">
+			<li ng-class="{show: NAV.showDropDown}">
+				<a href="user/settings" ng-click="NAV.show()">{{NAV.currentUser.name}} <i class="fa fa-angle-down"></i></a>
+				<ul class="hide">
+					<li><a href="user/profile">MY ACCOUNT</a></li>
+					<li><a href="user/logout">LOGOUT</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</nav>
+<!--<a href="user/logout">LOGOUT</a>-->

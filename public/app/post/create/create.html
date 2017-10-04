@@ -1,0 +1,72 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1">
+			<div class="card">
+				<div class="card-heading card-padding">
+					<h1><span ng-if="BCC.frm.action === 'new'">Create New Post</span><span ng-if="BCC.frm.action === 'update'">Update Post</span></h1>
+				</div>
+				<div class="card-body card-padding">
+					<form class="angular-form" ng-submit="BCC.submit()" name="login" novalidate >
+					<div class="form-group">
+						<div class="form-line">
+								<label class="form-label">Blog Title<span>*</span></label>
+								<input type="text" name="title" class="form-control" ng-model="BCC.frm.data.title" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required/>
+						</div>
+						<p ng-show="(!login.title.$valid && login.title.$touched) || BCC.frm.error['title']" class="text-danger">{{ BCC.frm.msg.required }}</p>
+					</div>
+
+					<div class="form-group">
+						<div class="form-line">
+								<label class="form-label">Image<span>*</span></label>
+								<input type="text" name="image" class="form-control" ng-model="BCC.frm.data.image" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required/>
+						</div>
+						<p ng-show="(!login.image.$valid && login.image.$touched) || BCC.frm.error['image']" class="text-danger">{{ BCC.frm.msg.required }}</p>
+					</div>	
+
+					<div class="form-group">
+						<div class="form-line">
+								<label class="form-label">Category<span>*</span></label>
+								<select name="category" class="form-control" ng-model="BCC.frm.data.category" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required>
+									<option ng-repeat="(key, label) in BCC.category" value="{{ key }}">{{ label }}</option>
+								</select>
+						</div>
+						<p ng-show="(!login.category.$valid && login.category.$touched) || BCC.frm.error['category']" class="text-danger">{{ BCC.frm.msg.required }}</p>
+					</div>	
+
+					<div class="form-group">
+						<div class="form-line">
+								<label class="form-label">Tags<span>*</span></label>
+								<input type="text" name="tags" class="form-control" ng-model="BCC.frm.data.tags" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required/>
+						</div>
+						<p ng-show="(!login.tags.$valid && login.tags.$touched) || BCC.frm.error['tags']" class="text-danger">{{ BCC.frm.msg.required }}</p>
+					</div>	
+
+					<div class="form-group">
+						<div class="form-line">
+								<label class="form-label">Short Description<span>*</span></label>
+								<textarea rows="4" name="short_description" class="form-control" ng-model="BCC.frm.data.short_description" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required></textarea>
+						</div>
+						<p ng-show="(!login.short_description.$valid && login.short_description.$touched) || BCC.frm.error['short_description']" class="text-danger">{{ BCC.frm.msg.required }}</p>
+					</div>
+
+					<div class="form-group">
+						<div class="form-line">
+								<label class="form-label">Description<span>*</span></label>
+								<textarea ui-tinymce="BCC.tinymceOptions" name="description" class="form-control" ng-model="BCC.frm.data.description" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required/></textarea>
+						</div>
+						<p ng-show="(!login.description.$valid && login.description.$touched) || BCC.frm.error['description']" class="text-danger">{{ BCC.frm.msg.required }}</p>
+					</div>
+
+					<p class="text-info">* fields are required</p>
+					<input type="submit" class="btn btn-primary" value="Save" ng-click="BCC.frm.data.status = 'save'"/>
+					<input type="submit" class="btn btn-success" value="Save & Publish" ng-click="BCC.frm.data.status = 'published'"/>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- ng-disabled="login.$invalid"-->
+
+<div class="alert alert-success alert-fixed" ng-if="BCC.success"><i class="fa fa-check"></i> {{BCC.successMsg}} <a class="close" data-dismiss="alert" href="#" aria-hidden="true" ng-click="BCC.success = false">&times;</a></div>
+<div class="alert alert-danger alert-fixed" ng-if="BCC.error">:( OOPS something went wrong please try again later.<a class="close" data-dismiss="alert" href="#" aria-hidden="true" ng-click="BCC.error = false">&times;</a></div>

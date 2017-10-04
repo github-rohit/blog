@@ -1,0 +1,57 @@
+<!-- <div class="page-header-top">
+	<div class="container">
+		PROFILE
+	</div>
+</div> -->
+
+
+<div class="container">
+	<div class="profile-container">
+		<form class="angular-form" ng-submit="PUC.submit()">
+		<h2 class="user-name">{{PUC.formData.name}}</h2>
+		<p>{{PUC.formData.email}}</p>
+		<div class="aboutme clearfix">
+			<img ng-src="{{PUC.formData.avatar || '/assets/img/user.png'}}">
+			<div>
+				<h3>ABOUT ME</h3>
+				<p><textarea rows="4" class="form-control" name="aboutme" ng-model="PUC.formData.aboutme" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)"></textarea></p>
+				<p><input type="text" class="form-control" placeholder="Website" name="website" ng-model="PUC.formData.website" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)"/></p>
+				<div class="row">
+					<div class="col-md-6">
+						<select class="form-control" name="gender" ng-model="PUC.formData.gender" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)">
+							<option value="male">Male</option>
+							<option value="female">Female</option>
+							<option value="other">Other</option>
+						</select>
+					</div>
+					<div class="col-md-6"><input type="text" class="form-control" placeholder="Country" name="country" ng-model="PUC.formData.country" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)"/></div>
+				</div>
+
+				<div class="social-media">
+					<h3>SOCIAL MEDIA</h3>
+					<p class="input-group"><span class="input-group-addon"><i class="fa fa-facebook-f"></i>/</span><input type="text" class="form-control" name="facebook" ng-model="PUC.formData.facebook" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)"/></p>
+
+					<p class="input-group"><span class="input-group-addon"><i class="fa fa-twitter"></i>/</span><input type="text" class="form-control" name="twitter" ng-model="PUC.formData.twitter" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)"/></p>
+
+					<p class="input-group"><span class="input-group-addon"><i class="fa fa-google-plus"></i>/</span><input type="text" class="form-control" name="google_plus" ng-model="PUC.formData.google_plus" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)"/></p>
+
+					<p class="input-group"><span class="input-group-addon"><i class="fa fa-linkedin"></i>/</span><input type="text" class="form-control" name="linkedIn" ng-model="PUC.formData.linkedIn" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)"/></p>
+
+					<p class="input-group"><span class="input-group-addon"><i class="fa fa-instagram"></i>/</span><input type="text" class="form-control" name="instagram" ng-model="PUC.formData.instagram" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)"/></p>
+
+					<p class="input-group"><span class="input-group-addon"><i class="fa fa-tumblr"></i>/</span><input type="text" class="form-control" name="tumblr" ng-model="PUC.formData.tumblr" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)"/></p>
+
+					<p class="input-group"><span class="input-group-addon"><i class="fa fa-pinterest-p"></i>/</span><input type="text" class="form-control" name="pinterest" ng-model="PUC.formData.pinterest" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)"/></p>
+				</div>
+			</div>
+		</div>
+		<div class="text-center">
+			<p></p>
+			<input type="submit" class="btn btn-success" value="Update"/>
+		</div>
+		</form>
+	</div>
+</div>
+
+<div class="alert alert-success alert-fixed" ng-if="PUC.success"><i class="fa fa-check"></i> Profile data updated successfully.<a class="close" data-dismiss="alert" href="#" aria-hidden="true" ng-click="PUC.success = false">&times;</a></div>
+<div class="alert alert-danger alert-fixed" ng-if="PUC.error">:( OOPS something went wrong please try again later.<a class="close" data-dismiss="alert" href="#" aria-hidden="true" ng-click="PUC.error = false">&times;</a></div>

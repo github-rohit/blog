@@ -1,0 +1,59 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+<meta charset="utf-8">
+<base href="/">
+<title>Blog | MEAN</title>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">  
+<link rel="stylesheet" type="text/css" href="/assets/css/main.css">  
+</head>
+<body>
+	<header ng-controller="NavController as NAV">
+		<nav-directive></nav-directive>
+	</header>
+	<div ng-view></div>
+<footer>
+    <div class="footer"></div>
+</footer>
+</body> 
+ <script src="//cloud.tinymce.com/stable/tinymce.min.js"></script>
+ <script src="//momentjs.com/downloads/moment.js"></script>
+
+<!--Anguler files-->
+<script src="/assets/js/angular.js"></script>
+<script src="/assets/js/tinymce.js"></script>
+<script src="/assets/js/angular-moment.min.js"></script>
+<script src="/assets/js/angular-cookies.js"></script>
+<script src="/assets/js/angular-route.js"></script>
+<script src="/assets/js/angular-sanitize.js"></script>
+<script src="/assets/js/angular-resource.js"></script>
+<script src="/assets/app/app.js"></script>
+<script src="/assets/app/routes/user.routes.js"></script>
+<script src="/assets/app/routes/routes.js"></script>
+<script src="/assets/app/run/run.js"></script>
+<script src="/assets/app/services/formerror.service.js"></script>
+<script src="/assets/app/services/authentication.service.js"></script>
+<script src="/assets/app/services/register.service.js"></script>
+<script src="/assets/app/services/post.service.js"></script>
+<script src="/assets/app/services/user.update.service.js"></script>
+<script src="/assets/app/services/pagination.service.js"></script>
+<!--Directive-->
+<script src="/assets/app/directives/nav/nav.directive.js"></script>
+<script src="/assets/app/directives/list/list.directive.js"></script>
+<script src="/assets/app/directives/pagination/pagination.directive.js"></script>
+
+<!--Controller-->
+<script src="/assets/app/nav/nav.controller.js"></script>
+<script src="/assets/app/index/home.controller.js"></script>
+<script src="/assets/app/register/register.controller.js"></script>
+<script src="/assets/app/login/login.controller.js"></script>
+<script src="/assets/app/logout/logout.controller.js"></script>
+<script src="/assets/app/profile/view/view.controller.js"></script>
+<script src="/assets/app/profile/update/update.controller.js"></script>
+<!--Post-->
+<script src="/assets/app/dashboard/dashboard.controller.js"></script>
+<script src="/assets/app/post/create/create.controller.js"></script>
+<script src="/assets/app/post/read/read.controller.js"></script>
+</html>

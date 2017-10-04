@@ -1,0 +1,51 @@
+<!-- <div class="page-header-top">
+	<div class="container">
+		PROFILE
+	</div>
+</div> -->
+
+<div class="container">
+	<div class="profile-container">
+		<h2 class="user-name"><i class="fa" ng-class="{'fa-male': PVC.user.gender === 'male',  'fa-female': PVC.user.gender === 'female'}"></i> {{PVC.user.name}}</h2>
+		<p><i class="fa fa-envelope-o"></i> {{PVC.user.email}}</p>
+		<div class="aboutme clearfix">
+			<img ng-src="{{PVC.user.avatar || '/assets/img/user.png'}}">
+			<div>
+				<h3>ABOUT ME</h3>
+				<p ng-if="PVC.user.aboutme">{{PVC.user.aboutme}}</p>
+				<p ng-if="!PVC.user.aboutme"><a href="/user/update">+Add about yourself</a></p>
+
+				<p ng-if="PVC.user.website"><a href="{{PVC.user.website}}" target="_blank">{{PVC.user.website}}</a></p>
+				<p ng-if="!PVC.user.website"><a href="/user/update">+Add your website</a></p>
+				<p>
+					<span ng-if="PVC.user.country"><i class="fa fa-map-marker"></i> {{PVC.user.country}}</span>
+					<span ng-if="!PVC.user.country"><i class="fa fa-map-marker"></i> <a href="/user/update">+Add your country</a></span>
+				</p>
+				
+				<div class="social-media">
+					<h3>SOCIAL MEDIA</h3>
+					<p ng-if="PVC.user.facebook"><a href="//www.facebook.com/{{PVC.user.facebook}}" target="_blank"><i class="fa fa-facebook-f"></i>/{{PVC.user.facebook}}</a></p>
+					<p ng-if="!PVC.user.facebook"><a href="/user/update"><i class="fa fa-facebook-f"></i>+ Add your facebook link</a></p>
+
+					<p ng-if="PVC.user.twitter"><a href="//www.twitter.com/{{PVC.user.twitter}}" target="_blank"><i class="fa fa-twitter"></i>/{{PVC.user.twitter}}</a></p>
+					<p ng-if="!PVC.user.twitter"><a href="/user/update"><i class="fa fa-twitter"></i>+ Add your twitter link</a></p>
+
+					<p ng-if="PVC.user.google_plus"><a href="//www.googleplus.com/{{PVC.user.google_plus}}" target="_blank"><i class="fa fa-google-plus"></i>/{{PVC.user.google_plus}}</a></p>
+					<p ng-if="!PVC.user.google_plus"><a href="/user/update"><i class="fa fa-google-plus"></i>+ Add your google+ link</a></p>
+
+					<p ng-if="PVC.user.linkedIn"><a href="//www.linkedIn.com/{{PVC.user.linkedIn}}" target="_blank"><i class="fa fa-linkedin"></i>/{{PVC.user.linkedIn}}</a></p>
+					<p ng-if="!PVC.user.linkedIn"><a href="/user/update"><i class="fa fa-linkedin"></i>+ Add your linkedin link</a></p>
+
+					<p ng-if="PVC.user.instagram"><a href="//www.instagram.com/{{PVC.user.instagram}}" target="_blank"><i class="fa fa-instagram"></i>/{{PVC.user.instagram}}</a></p>
+					<p ng-if="!PVC.user.instagram"><a href="/user/update"><i class="fa fa-instagram"></i>+ Add your instagram link</a></p>
+
+					<p ng-if="PVC.user.tumblr"><a href="//www.tumblr.com/{{PVC.user.tumblr}}" target="_blank"><i class="fa fa-tumblr"></i>/{{PVC.user.tumblr}}</a></p>
+					<p ng-if="!PVC.user.tumblr"><a href="/user/update"><i class="fa fa-tumblr"></i>+ Add your tumblr link</a></p>
+
+					<p ng-if="PVC.user.pinterest"><a href="//www.pinterest.com/{{PVC.user.pinterest}}" target="_blank"><i class="fa fa-pinterest-p"></i>/{{PVC.user.pinterest}}</a></p>					
+					<p ng-if="!PVC.user.pinterest"><a href="/user/update"><i class="fa fa-pinterest-p"></i>+ Add your pinterest link</a></p>
+				</div>
+		</div>
+	</div>
+</div>
+<a href="/user/update" class="btn btn-success floating-edit ripple ng-scope" title="Edit Profile"><i class="fa fa-pencil"></i></a>
