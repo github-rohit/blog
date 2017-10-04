@@ -1,10 +1,6 @@
 var mongoose = require('mongoose');
 var Schema  = mongoose.Schema;
 
-mongoose.connect('mongodb://localhost/blog', {
-	useMongoClient: true
-});
-
 var dbSchema = new Schema({
 	email: { 
 		type: String,

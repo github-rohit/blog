@@ -1,5 +1,7 @@
 {
     "connectionString": "mongodb://localhost:3001/blog",
     "apiUrl": "http://localhost:3001/api",
-    "secret": "oogwave"
+    "secret": "oogwave",    
+	"uname": "blog",
+    "pwd": "bloglogin"
 }

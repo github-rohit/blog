@@ -6,6 +6,7 @@ var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
 var passportHttp = require('passport-http');
 var flash = require('connect-flash');
+var mongoose = require('mongoose');
 
 var config = require('./config');
 var date = new Date();
@@ -54,4 +55,6 @@ module.exports =  function(app) {
 	app.use(passport.initialize());
 	app.use(passport.session());
 	app.use(cookieParser());
+
+	mongoose.connect(config.getDbConnectionString());
 };
