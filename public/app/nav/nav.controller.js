@@ -4,8 +4,10 @@
 	NavController.$inject = ['$scope', '$location', 'AuthenticationService']
 
 	function NavController($scope, $location, AuthenticationService) {	
+		var _this = this;
 		this.Authentication = AuthenticationService.isLogin;
 		this.user = {};
+		this.displayNav = false;
 
 		$scope.$watch(function() {
 			return AuthenticationService.isLogin;
@@ -20,6 +22,10 @@
 			const path = $location.path();
 
 			return path === url ? 'active' : '';
+		}
+		
+		this.toggle = function () {
+			_this.displayNav = !_this.displayNav;
 		}
 			
 	}

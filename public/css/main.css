@@ -48,6 +48,9 @@ h1, h2, h3, h4, h5, h6 {
 	transition-duration: 200ms;
 	margin: 0;
 }
+.navbar {
+	margin: 0;
+}
 .navbar-default {
 	background: #263238;		
 	border-radius: 0;
@@ -276,12 +279,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 .ui-list li .description {
 	font-size: 16px;
-	padding-left: 220px;
+}
+@media only screen and (min-width: 599px) {
+	.ui-list li .description {
+		padding-left: 220px;
+	}
 }
 .ui-list li .description .thumb {
 	max-width: 220px;
-	float: left;
-	margin-left: -235px;
+	margin-bottom: 15px;
+}
+@media only screen and (min-width: 599px) {
+	.ui-list li .description .thumb {
+		float: left;
+		margin-left: -235px;
+		margin-bottom: 0;
+	}
 }
 .ui-list li .status {
 	position: absolute;
@@ -551,3 +564,28 @@ h1, h2, h3, h4, h5, h6 {
 	background: transparent;
 	color: #47a447;
 }
+
+@media only screen and (max-width: 992px) {
+	.container {
+		width: 100%; 
+	}
+	.ui-post-page {
+		padding: 15px;
+	}
+}
+@media only screen and (max-width: 599px) {
+	a[href^="/create"] {
+		display: none;
+	}
+}
+@media only screen and (max-width: 767px) {
+	.ui-read-post .ui-right-block,
+	.navbar	{
+		display: none; 
+	}
+	.navbar.in {
+		display: block; 
+	}
+}
+
+
