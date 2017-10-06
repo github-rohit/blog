@@ -25,7 +25,6 @@
 		}
 
 		$rootScope.$on('$routeChangeStart', function(event, next, current) {
-			console.log('hu')
 			routeChangeStart(event, next, current);
 		});
 

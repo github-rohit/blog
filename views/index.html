@@ -11,14 +11,22 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">  
 <link rel="stylesheet" type="text/css" href="/assets/css/main.css">  
 </head>
-<body>
+<body class="ng-cloak">
 	<header ng-controller="NavController as NAV" class="navbar-default">
 		<nav-directive></nav-directive>
 	</header>
-	<div ng-view></div>
+	<div ng-view class="ng-cloak"></div>
 <footer>
     <div class="footer"></div>
 </footer>
+<route-loader>
+	<div style="display: table; width: 100%; height: 100%; position: fixed; top: 0; bottom: 0; right: 0; left: 0; background: #F1F3F6; text-align: center; z-index: 1000000000000000">
+		<div style="display: table-cell; width: 100%; height: 100%; vertical-align: middle;">
+			<img src="/assets/img/loader.svg" style="height: 100px; margin-top: -100px"/><br>
+			Loading...
+		<div>
+	</div>
+</route-loader>
 </body> 
  <script src="//cloud.tinymce.com/stable/tinymce.min.js"></script>
  <script src="//momentjs.com/downloads/moment.js"></script>
@@ -42,6 +50,7 @@
 <script src="/assets/app/services/user.update.service.js"></script>
 <script src="/assets/app/services/pagination.service.js"></script>
 <!--Directive-->
+<script src="/assets/app/directives/loader/loader.directive.js"></script>
 <script src="/assets/app/directives/nav/nav.directive.js"></script>
 <script src="/assets/app/directives/list/list.directive.js"></script>
 <script src="/assets/app/directives/pagination/pagination.directive.js"></script>
