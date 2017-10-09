@@ -63,13 +63,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 .navbar-brand {
 	position: relative;
+	padding: 10px 15px;
 }
 .navbar-brand span {
-	position: absolute;
 	font-size: 10px;
 	color: #FFF;
-	right: 15px;
-	bottom: 5px;
+	margin-left: -2px;
+	top: 13px;
+	position: relative;
+	font-weight: bold;
 }
 .navbar-default .navbar-nav > li > a,
 .navbar-default .navbar-nav > li > a:focus ,
