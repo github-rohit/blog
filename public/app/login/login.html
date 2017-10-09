@@ -1,27 +1,25 @@
 <div class="container">
 	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<div class="card">
-				<div class="card-heading card-padding">
-					<h1>Login</h1>
-				</div>
+		<div class="col-md-6 col-md-offset-3">
+			<div class="card login-card">
+				<div class="card-heading"><h1>Login</h1></div>
 				<div class="card-body card-padding">
-					<form class="angular-form" ng-submit="LC.submit()" name="login" novalidate>
+					<form class="angular-form angular-form-login" ng-submit="LC.submit()" name="login" novalidate>
 					<div class="form-group">
 						<div class="form-line">
-								<label class="form-label">Username<span>*</span></label>
-								<input type="text" name="uname" class="form-control" ng-model="LC.formData.uname" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required/>
+							<i class="fa fa-user"></i>
+								<input type="text" name="uname" class="form-control" ng-model="LC.formData.uname" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" placeholder="Username" required/>
 						</div>
 						<p ng-show="(!login.uname.$valid && login.uname.$touched) || formError['uname']" class="text-danger">{{ formValidateMsg.required }}</p>
 					</div>	
 					<div class="form-group">
 						<div class="form-line">
-								<label class="form-label">Create a password<span>*</span></label>
-								<input type="password" name="passwd" class="form-control" ng-model="LC.formData.passwd" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required/>
+							<i class="fa fa-key"></i>
+								<input type="password" name="passwd" class="form-control" ng-model="LC.formData.passwd" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" placeholder="Password" required/>
 						</div>
 						<p ng-show="(!login.passwd.$valid && login.passwd.$touched) || formError['passwd']" class="text-danger">{{ formValidateMsg.required }}</p>
 					</div>		
-					<p class="text-info">* fields are required</p>
+					
 					<input type="submit" class="btn btn-success" value="Login" ng-disabled="login.$invalid"/>
 					</form>
 				</div>
