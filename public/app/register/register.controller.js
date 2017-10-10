@@ -1,9 +1,9 @@
 (function(app){
 
 	app.module.controller('RegisterController', RegisterController);
-		RegisterController.$inject = ['$scope', '$http', 'FormErrorService', 'RegisterService']
+		RegisterController.$inject = ['$scope', '$http', '$interval', 'FormErrorService', 'RegisterService']
 
-		function RegisterController($scope, $http, FormErrorService, RegisterService) {
+		function RegisterController($scope, $http, $interval, FormErrorService, RegisterService) {
 			const self = this;
 			this.formData = {
 				gender: ''
@@ -11,11 +11,16 @@
 			this.formError = {};
 			this.formValidateMsg = FormErrorService.messages;
 			this.userSuccess = false;
-
-			grecaptcha.render('gre-captcha', {
-			  'sitekey' : '6LciizMUAAAAAE0nWYFK33EmsDQ_L0M7TwyHULvz'
-			});
 			
+			var isgrecaptchajs = $interval(function(){
+				grecaptcha.render('gre-captcha', {
+				  'sitekey' : '6LciizMUAAAAAE0nWYFK33EmsDQ_L0M7TwyHULvz'
+				});	
+				
+				$interval.cancel(isgrecaptchajs);
+				
+			}, 2000);
+
 			this.submit = function() {
 				var g = grecaptcha.getResponse();
 				if (!g) {

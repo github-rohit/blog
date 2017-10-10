@@ -3,14 +3,16 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const STATUS_PENDING = "pending";
+const sendmail = require('sendmail')();
 
 module.exports =  function(app) {
     app.post('/api/register', register);
+    app.post('/api/registerverification', verification);
 
     Users.getUserByEmail = function(email, callback) {
         Users.findOne({ email: email}, function(err, user){
             if (err) {
-                console.log('getUserByEmail')
                 callback(err);
             } else {
                 callback(null, user);
@@ -38,7 +40,8 @@ module.exports =  function(app) {
                     name: data.name,
                     uname: data.uname,
                     gender: data.gender,
-                    passwd: hash
+                    passwd: hash,
+					status: STATUS_PENDING
                 })
 
                 newUser.save(function(err){
@@ -61,6 +64,22 @@ module.exports =  function(app) {
 			}
 		});
 	};
+	
+	function verification (req, res) {
+		
+	}
+	
+	function sendMail (res) {
+		sendmail({
+			from: 'mygmforsm@gmail.com',
+			to: 'mygmforsm@gmail.com',
+			subject: 'test sendmail',
+			html: 'Mail of test sendmail ',
+		  }, function(err, reply) {
+			console.log(err && err.stack);
+			console.dir(reply);
+		});
+	}
 
     function register (req, res){
         var resObj = {};
@@ -79,7 +98,8 @@ module.exports =  function(app) {
         req.checkBody('passwdAgain', 'passwdAgain').equals(req.body.passwd);
 
         errors = req.validationErrors();
-
+									sendMail();
+		console.log('hi')
         if (errors) {
             res.send({
                 errors: errors
@@ -91,11 +111,19 @@ module.exports =  function(app) {
                         error: err
                     });
                 } else if (user){
-                    res.send({
-                        error: {
+					if (user.status == STATUS_PENDING) {
+						resObj = {
+                            name: 'emailVerification',
+                            msg: 'Email already register. But verification is pending!'
+                        };
+					} else {
+						resObj = {
                             name: 'email',
-                            msg: 'Email already register'
-                        }
+                            msg: 'Email already register!'
+                        };
+					}
+                    res.send({
+                        error: resObj
                     });
                 } else {
                     Users.getUserByUname(uname, function(err, userid){
@@ -107,7 +135,7 @@ module.exports =  function(app) {
                             res.send({
                                 error: {
                                     name: 'uname',
-                                    msg: 'User Name already register'
+                                    msg: 'User Name already register!'
                                 }
                             });
                         } else {

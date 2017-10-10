@@ -13,10 +13,10 @@
 				email: 'Please enter a valid email.',
 				passwdAgain: 'Password do not match.',
 				emailTaken: 'This email already taken.',
+				emailVerification: 'Email already register. But verification is pending!',
 				unameTaken: 'This username already taken.'
 			},
 			show: function (errObj) {
-				console.log(errObj)
 				const self = this;
 				var obj = {};
 

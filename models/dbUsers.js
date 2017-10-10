@@ -24,6 +24,9 @@ var dbSchema = new Schema({
 	gender: {
 		type: String
 	},
+	status: {
+		type: String
+	},
 	avatar: {
 		type: String
 	},
