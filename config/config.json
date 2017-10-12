@@ -3,5 +3,9 @@
     "apiUrl": "http://localhost:3001/api",
     "secret": "oogwave",    
 	"uname": "blogadmin",
-    "pwd": "blogadmin"
+    "pwd": "blogadmin",
+	"status": {
+		"pending": "pending",
+		"active": "active"
+	}
 }

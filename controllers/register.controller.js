@@ -1,14 +1,31 @@
+const config = require('../config/config');
 const Users = require('../models/dbUsers');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const STATUS_PENDING = "pending";
 const sendmail = require('sendmail')();
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('CryptrSecretKey');
+
+const STATUS_PENDING = config.status.pending;
+const STATUS_ACTIVE = config.status.active;
+const registerverification = "registerverification";
 
 module.exports =  function(app) {
     app.post('/api/register', register);
-    app.post('/api/registerverification', verification);
+    app.post('/api/' + registerverification, verification);
+    app.post('/api/resendemail', resendemail);
+
+    Users.getUserById = function(id, callback) {
+        Users.findOne({ id: id}, function(err, user){
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, user);
+            }
+        });
+    };
 
     Users.getUserByEmail = function(email, callback) {
         Users.findOne({ email: email}, function(err, user){
@@ -35,7 +52,7 @@ module.exports =  function(app) {
             if (err) {
                 callback(err);
             } else {
-                var newUser = Users({
+                const newUser = Users({
                     email: data.email,
                     name: data.name,
                     uname: data.uname,
@@ -43,14 +60,16 @@ module.exports =  function(app) {
                     passwd: hash,
 					status: STATUS_PENDING
                 })
-
-                newUser.save(function(err){
-                    if (err) {
-                        callback(err)
-                    } else {
-                        callback(null);
-                    }
-                });
+				
+				const URL_KEY = cryptr.encrypt(newUser._id);
+				
+				newUser.save(function(err){
+					if (err) {
+						callback(err)
+					} else {
+						callback(null, URL_KEY);
+					}
+				});
             }
         });
     };
@@ -65,20 +84,18 @@ module.exports =  function(app) {
 		});
 	};
 	
-	function verification (req, res) {
+	function sendMail (email, link) {
 		
-	}
-	
-	function sendMail (res) {
-		sendmail({
-			from: 'mygmforsm@gmail.com',
-			to: 'mygmforsm@gmail.com',
+/*		sendmail({
+			from: 'donotreply@nirmalrohit.com',
+			to: email,
 			subject: 'test sendmail',
-			html: 'Mail of test sendmail ',
+			html: `<a href="${link}">verify email</a> `,
 		  }, function(err, reply) {
 			console.log(err && err.stack);
 			console.dir(reply);
 		});
+*/		
 	}
 
     function register (req, res){
@@ -98,8 +115,7 @@ module.exports =  function(app) {
         req.checkBody('passwdAgain', 'passwdAgain').equals(req.body.passwd);
 
         errors = req.validationErrors();
-									sendMail();
-		console.log('hi')
+		
         if (errors) {
             res.send({
                 errors: errors
@@ -139,17 +155,19 @@ module.exports =  function(app) {
                                 }
                             });
                         } else {
-                            Users.saveUser(data, function(err){
+                            Users.saveUser(data, function(err, id){
                                 if(err) {
                                     res.send({
                                         error: true,
                                         message: 'Error'
                                     });
                                 } else {
-                                    res.send({
-                                        success: true,
-                                        message: 'Success'
-                                    });
+									res.send({
+										success: true,
+										message: 'Success',
+										id: '//' + req.get('host') + "/" + registerverification + '/' +id
+									});
+									//sendMail(data.email, `//${req.get('host')}/${registerverification}/${id}`);
                                 }
                             });
                         }                        
@@ -158,4 +176,49 @@ module.exports =  function(app) {
             });
         }
     }
+	
+	function verification (req, res) {
+        const ID = cryptr.decrypt(req.body.id);
+
+		Users.getUserById(ID, function (err) {
+			if ( err ) {
+				
+			} else {
+				verificationEmail(ID, res);
+			}
+		});
+		
+	}
+	
+	function verificationEmail (id, res) {
+		Users.update({
+			_id: id
+		}, {
+			status: STATUS_ACTIVE
+		}, function(err, user){
+			if(err) {
+				res.send({
+					error: true
+				});
+			} else {
+				res.send({
+					success: true
+				});
+			}					
+		});		
+	}
+	
+	function resendemail(req, res) {
+		const email = req.body.email;
+		console.log(email)
+		res.send({
+			success: true
+		});
+		
+		//sendMail(email, res);
+		
+	}
 };
+
+
+		

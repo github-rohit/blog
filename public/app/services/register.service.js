@@ -13,6 +13,24 @@
 				}, function(response){
 
 				});
+			},
+			emailVerification: function (id, callback) {
+				$http.post('/api/registerverification', {
+					id: id
+				}).then(function(response){
+					callback(response);
+				}, function(response){
+					
+				});
+			},
+			resendEmail: function (email, callback) {
+				$http.post('/api/resendemail', {
+					email: email
+				}).then(function(response){
+					callback(response);
+				}, function(response){
+					
+				});
 			}
 		};
 

@@ -18,6 +18,10 @@
             templateUrl: '/assets/app/register/register.html',
             controller: 'RegisterController',
             controllerAs: 'RC'
+        }).when('/user/registerverification/:id', {
+            templateUrl: '/assets/app/register/emailVerification.html',
+            controller: 'EmailVerification',
+            controllerAs: 'EmailV'
         }).when('/user/logout', {
             templateUrl: '/assets/app/logout/logout.html',
             controller: 'LogoutController',

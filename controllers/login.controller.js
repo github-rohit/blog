@@ -1,3 +1,4 @@
+const config = require('../config/config');
 const Users = require('../models/dbUsers');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
@@ -38,10 +39,12 @@ module.exports =  function(app) {
 			if (err) { 
 				return done(err); 
 			}
-	    if (!user) {
-            return done(null, false, { message: 'Incorrect username.' });
-        }
-        Users.validPassword(passwd, user.passwd, function(err, isMatch){
+			
+			if (!user) {
+				return done(null, false, { message: 'Incorrect username.' });
+			}
+			
+			Users.validPassword(passwd, user.passwd, function(err, isMatch){
 				if (err) {
 					return done(err)
 				}
@@ -70,7 +73,15 @@ module.exports =  function(app) {
 			return req.login(user, function(err) {
 				if (err) {
 					return res.sendStatus(500);
-				}
+				} 
+				
+				if (user.status == config.status.pending) {
+					return res.send({
+						status: config.status.pending,
+						email: user.email
+					});
+				} 
+								
 				return res.send({ 
 					success : true, 
 					user: {
