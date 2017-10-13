@@ -87,7 +87,7 @@ module.exports =  function(app) {
 	
 	function sendMail (email, name, id, host) {
 		ejs.renderFile('views/email.ejs', {
-			logo: `http://${host}/assets/img/logo.svg`,
+			logo: `${host}`,
 			name: name,
 			emailLink: `//${host}/user/${registerverification}/${id}`
 		}, {}, function(err, template) {
