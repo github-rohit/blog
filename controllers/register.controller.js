@@ -86,11 +86,11 @@ module.exports =  function(app) {
 	};
 	
 	function sendMail (email, name, id, host) {
-
+		console.log(`//${host}/assets/img/logo.svg`)
 		ejs.renderFile('views/email.ejs', {
 			logo: `//${host}/assets/img/logo.svg`,
 			name: name,
-			emailLink: `//${host}user/${registerverification}/${id}`
+			emailLink: `//${host}/user/${registerverification}/${id}`
 		}, {}, function(err, template) {
 			
 			if (err) {
