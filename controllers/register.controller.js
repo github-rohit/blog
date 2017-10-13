@@ -1,5 +1,6 @@
 const config = require('../config/config');
 const Users = require('../models/dbUsers');
+const ejs = require('ejs');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
@@ -84,18 +85,29 @@ module.exports =  function(app) {
 		});
 	};
 	
-	function sendMail (email, link) {
-		
-/*		sendmail({
-			from: 'donotreply@nirmalrohit.com',
-			to: email,
-			subject: 'test sendmail',
-			html: `<a href="${link}">verify email</a> `,
-		  }, function(err, reply) {
-			console.log(err && err.stack);
-			console.dir(reply);
-		});
-*/		
+	function sendMail (email, name, id, host) {
+
+		ejs.renderFile('views/email.ejs', {
+			logo: `//${host}/assets/img/logo.svg`,
+			name: name,
+			emailLink: `//${host}user/${registerverification}/${id}`
+		}, {}, function(err, template) {
+			
+			if (err) {
+				console.log(err);
+				return;
+			}
+			
+			sendmail({
+				from: 'no-reply@nirmalrohit.com',
+				to: email,
+				subject: 'Please verify your email address',
+				html: template,
+			  }, function(err, reply) {
+				console.log(err && err.stack);
+				console.dir(reply);
+			});
+		});	
 	}
 
     function register (req, res){
@@ -162,12 +174,14 @@ module.exports =  function(app) {
                                         message: 'Error'
                                     });
                                 } else {
+									const host = req.get('host');
+									
 									res.send({
 										success: true,
-										message: 'Success',
-										id: '//' + req.get('host') + "/" + registerverification + '/' +id
+										message: 'Success'
 									});
-									//sendMail(data.email, `//${req.get('host')}/${registerverification}/${id}`);
+									
+									sendMail(data.email, data.name, id, host);
                                 }
                             });
                         }                        
@@ -210,7 +224,7 @@ module.exports =  function(app) {
 	
 	function resendemail(req, res) {
 		const email = req.body.email;
-		console.log(email)
+
 		res.send({
 			success: true
 		});
