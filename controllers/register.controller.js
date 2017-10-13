@@ -223,13 +223,21 @@ module.exports =  function(app) {
 	
 	function resendemail(req, res) {
 		const email = req.body.email;
-
-		res.send({
-			success: true
-		});
 		
-		//sendMail(email, res);
+		Users.getUserByEmail(email, function (err, user) {
+			if (err) {
+				
+			}
+			
+			const host = req.get('host');
+			const URL_KEY = cryptr.encrypt(user._id);
 		
+			res.send({
+				success: true
+			});
+			
+			sendMail(email, user.name, URL_KEY, host);
+		});		
 	}
 };
 
