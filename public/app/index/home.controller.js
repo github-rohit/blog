@@ -19,7 +19,9 @@
 
 		var query = {};
 
-		if (catType) {
+		if (catType == "createdBy") {
+			query[category] = decodeURIComponent(catType);
+		} else if (catType) {
 			query[category] = decodeURIComponent(catType);
 		}
 		

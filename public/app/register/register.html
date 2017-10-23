@@ -32,14 +32,6 @@
 					</div>
 					<div class="form-group">
 						<div class="form-line">
-						<i class="fa fa-user"></i>
-								<input type="text" name="uname" class="form-control" ng-model="RC.formData.uname" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" placeholder="Choose your username*" required/>
-						</div>
-						<p ng-show="(!register.uname.$valid && register.uname.$touched) || RC.formError['uname']" class="text-danger">{{ RC.formValidateMsg.required }}</p>
-						<p ng-if="RC.emailunameTaken.uname" class="text-danger">{{ RC.formValidateMsg.unameTaken }}</p>
-					</div>
-					<div class="form-group">
-						<div class="form-line">
 						<i class="fa fa-genderless"></i>
 								<select name="gender" class="form-control" ng-model="RC.formData.gender" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required>
 									<option value="">Gender*</option>

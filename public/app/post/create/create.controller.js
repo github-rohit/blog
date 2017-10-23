@@ -56,7 +56,7 @@
 		}
 
 		this.submit = () => {
-			this.frm.data.owner = this.currentUser.name;
+			this.frm.data.owner = this.currentUser._id;
 			this.frm.data.date = new Date();
 			this.frm.data.action = this.frm.action;
 

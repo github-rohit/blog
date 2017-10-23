@@ -22,6 +22,14 @@
             templateUrl: '/assets/app/register/emailVerification.html',
             controller: 'EmailVerification',
             controllerAs: 'EmailV'
+        }).when('/user/forgotpassword', {
+            templateUrl: '/assets/app/register/forgotpassword.html',
+            controller: 'ForgotPassword',
+            controllerAs: 'FP'
+        }).when('/user/resetpassword/:id', {
+            templateUrl: '/assets/app/register/resetpassword.html',
+            controller: 'ResetPassword',
+            controllerAs: 'RP'
         }).when('/user/logout', {
             templateUrl: '/assets/app/logout/logout.html',
             controller: 'LogoutController',

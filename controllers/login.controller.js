@@ -32,10 +32,10 @@ module.exports =  function(app) {
 	});
     
 	passport.use(new LocalStrategy( {
-		usernameField: 'uname',
+		usernameField: 'email',
 		passwordField: 'passwd'
-	}, function(uname, passwd, done){
-		Users.findOne({ uname: uname }, function(err, user) {
+	}, function(email, passwd, done){
+		Users.findOne({ email: email }, function(err, user) {
 			if (err) { 
 				return done(err); 
 			}
@@ -60,13 +60,13 @@ module.exports =  function(app) {
 	function login(req, res, next) {
 		passport.authenticate('local', function(err, user) {
 			if (err) {
-					return next(err); // will generate a 500 error
+				return next(err); // will generate a 500 error
 			}
 			
 			// Generate a JSON response reflecting authentication status
 			if (! user) {
 				return res.send({ 
-					success : false, 
+					authenticationFailed : true, 
 					message : 'authentication failed' 
 				});
 			}
@@ -86,7 +86,6 @@ module.exports =  function(app) {
 					success : true, 
 					user: {
 						_id: user._id,
-						uname: user.uname,
 						name: user.name,
 						email: user.email,
 						gender: user.gender,
@@ -110,7 +109,7 @@ module.exports =  function(app) {
 	
   function islogin (req, res, next) {
 		res.send({
-				success: true
+			success: true
 		});
 	}  
 	

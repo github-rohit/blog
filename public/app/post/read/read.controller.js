@@ -5,8 +5,8 @@
 
 	function BlogReadController($scope, $rootScope, PostService, FormErrorService, AuthenticationService) {
 
-		const path = window.location.pathname;
-		const postId = path.split('/').pop();
+		var path = window.location.pathname;
+		var postId = path.split('/').pop();
 
 		this.isLogin = AuthenticationService.isLogin;
 		this.category = PostService.category;
@@ -17,7 +17,7 @@
 		this.comments = {};
 
 		this.submit = function() {
-			const newComment = {
+			var newComment = {
 				comment: this.frm.comment,
 				date: new Date(),
 				createdBy: 'rohit',

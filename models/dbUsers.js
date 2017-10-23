@@ -12,11 +12,6 @@ var dbSchema = new Schema({
 		type: String,
 		required: true
 	},
-	uname: {
-		type: String,
-		required: true,
-		unique: true
-	},
 	passwd: {
 		type: String,
 		required: true

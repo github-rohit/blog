@@ -31,6 +31,20 @@
 				}, function(response){
 					
 				});
+			},
+			forgotPassword: function (data, callback) {
+				$http.post('/api/forgotpassword', data).then(function(response){
+					callback(response);
+				}, function(response){
+					
+				});
+			},
+			resetPassword: function (data, callback) {
+				$http.post('/api/resetpassword', data).then(function(response){
+					callback(response);
+				}, function(response){
+					
+				});
 			}
 		};
 
