@@ -157,7 +157,7 @@ module.exports =  (app) => {
 	 */
 	
 	function sendForgotPasswordMail (email, name, id, host) {
-		ejs.renderFile('views/forgotPasswordeEmail.ejs', {
+		Ejs.renderFile('views/forgotPasswordeEmail.ejs', {
 			logo: `${host}`,
 			name: name,
 			emailLink: `//${host}/user/resetpassword/${id}`
