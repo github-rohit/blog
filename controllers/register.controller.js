@@ -99,8 +99,27 @@ module.exports =  (app) => {
 			});				
 		});
 	}
-
 	
+	Users.updateUserPwd = (query, passwd) => {
+		return new Promise((resolve, reject) => {
+			Bcrypt.hash(passwd, 10, (err, hash) => {
+				if (err) {
+					reject(err);
+				} else {
+					Users.update(query, {
+						passwd: hash
+					}, (err) => {
+						if (err) {
+							reject(err);
+						} else {
+							resolve();
+						}
+					});							
+				}
+			});						
+		});
+	}
+
 	
 	function getUserIdByUrl(url) {	
 		return new Promise((resolve, reject) => {
@@ -409,13 +428,9 @@ module.exports =  (app) => {
 
 		} else {
 			Users.getUserById(USER_ID).then( user => {
-
-				return Users.update({
+				return Users.updateUserPwd({
 					_id: USER_ID
-				}, {
-					passwd: passwd
-				});
-
+				}, passwd);
 			}).then(user => {
 				
 				ResetPassword.deleteMany({
