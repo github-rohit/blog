@@ -168,7 +168,7 @@ module.exports =  (app) => {
 				return;
 			}
 			
-			sendmail({
+			Sendmail({
 				from: 'no-reply@nirmalrohit.com',
 				to: email,
 				subject: 'Please verify your email address',
