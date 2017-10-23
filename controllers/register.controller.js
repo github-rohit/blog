@@ -171,7 +171,7 @@ module.exports =  (app) => {
 			Sendmail({
 				from: 'no-reply@nirmalrohit.com',
 				to: email,
-				subject: 'Please verify your email address',
+				subject: 'Reset password',
 				html: template,
 			  }, (err, reply) => {
 				console.log(err && err.stack);
