@@ -6,7 +6,7 @@
 			<a class="btn btn-default btn-circle" href="/create/{{post._id}}"title="Edit this post"><i class="fa fa-pencil"></i></a>
 		</span>
 		<h2 class="post-title">{{post.title}}</h2>
-		<p class="byline"><span ng-if="!owner"><strong>By</strong> <a href="/author/{{post.author[0].name.replace(' ', '-')}}-{{post.created_by}}">{{post.author[0].name}}</a><i class="fa fa-circle"></i></span>  {{post.date | amUtc | amDateFormat:'MMMM Do YYYY'}}</p>
+		<p class="byline"><span ng-if="!owner"><strong>By</strong> <a href="/author/{{post.author[0].name | replaceSpaceWithDash}}-{{post.created_by}}">{{post.author[0].name}}</a><i class="fa fa-circle"></i></span>  {{post.date | amUtc | amDateFormat:'MMMM Do YYYY'}}</p>
 		<div class="description clearfix">
 			<img class="thumb" src="{{post.image}}" /> 
 			<div>
