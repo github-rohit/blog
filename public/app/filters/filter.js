@@ -3,7 +3,7 @@
 
     function replaceSpaceWithDash() { 
         return function (str) {
-            return str.replace(/ /g, "-");  
+            return str ? str.replace(/ /g, "-") : "";  
         }    
     }
 

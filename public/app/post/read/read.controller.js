@@ -49,7 +49,7 @@
 			}, (response) => {
 				var res = response.data;
 				if (res.success) {
-					this.post = res.list;
+					this.post = res.list[0];
 				} else {
 
 				}

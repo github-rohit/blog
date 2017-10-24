@@ -11,6 +11,7 @@ module.exports =  function(app) {
 		var resObj = {};
 		var query = {};
 
+		const id = req.body.id;
 		const status = req.body.status;
 		const category = req.body.category || '';
 		const tags = req.body.tags || '';
@@ -53,7 +54,11 @@ module.exports =  function(app) {
 			});
 		}
 
-		if (author && status) {
+		if (id) {
+			oMATCH.$match = {
+				_id: new ObjectId(id)
+			};
+		} else if (author && status) {
 			oMATCH.$match = {
 				created_by: new ObjectId(author),
 				status: status
@@ -80,7 +85,7 @@ module.exports =  function(app) {
 		if (oMATCH.$match) {
 			aQUERY.push(oMATCH);
 		}
-
+		
 		Posts.aggregate(aQUERY, (err, data) => {
 			if (err) {
 				res.send({
@@ -100,23 +105,7 @@ module.exports =  function(app) {
 	}  
 
 	function getPost(req, res, next) {
-		var resObj = {};
-
-		const id = req.body.id;
-
-		Posts.findById(id, (err, post) => {
-			if(err) {
-				res.send({
-					error: true,
-					message: err.errmsg
-				});
-			} else {
-				res.send({
-					success: true,
-					list: post
-				});
-			}		
-		});
+		getPosts(req, res, next);
 	}
 	// Get count
 	function getCount(query, callback) {

@@ -3,7 +3,7 @@
 		<div class="col-md-9 col-sm-9">
 			<div class=" ui-post-page">
 				<h1>{{BRC.post.title}}</h1>
-				<p class="byline"><strong>By</strong> <a href="/createdBy/{{BRC.post.owner}}">{{BRC.post.owner}}</a> <i class="fa fa-circle"></i> {{BRC.post.date | amUtc | amDateFormat:'MMMM Do YYYY'}}</p>
+				<p class="byline"><strong>By</strong> <a href="/author/{{BRC.post.author[0].name | replaceSpaceWithDash}}-{{BRC.post.created_by}}">{{BRC.post.author[0].name}}</a> <i class="fa fa-circle"></i> {{BRC.post.date | amUtc | amDateFormat:'MMMM Do YYYY'}}</p>
 				<div ng-bind-html="BRC.post.description" class="description"></div>
 			</div>
 			<div class="ui-add-comment">
