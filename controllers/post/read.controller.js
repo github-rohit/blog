@@ -1,50 +1,102 @@
 const Posts = require('../../models/dbPosts');
+const Users = require('../../models/dbUsers');
+const ObjectId = require('mongoose').Types.ObjectId; 
 
 module.exports =  function(app) {
 
 	app.post('/api/post/posts', getPosts);
 	app.post('/api/post/posts/id', getPost);
 	
-  function getPosts (req, res, next) {
+  	function getPosts (req, res, next) {
 		var resObj = {};
 		var query = {};
 
 		const status = req.body.status;
 		const category = req.body.category || '';
 		const tags = req.body.tags || '';
-		const createdBy = req.body.createdBy || '';
-		const limit = req.body.limit || 10;
+		const author = req.body.author || '';
+		
 		const page = req.body.page || 1;
 		const skip = page  > 1 ? limit * ( page - 1 ) : 0;
+		
+		const aQUERY = [{
+			$limit: req.body.limit || 10
+		}, {
+			$lookup: {
+				from: "users",
+				localField: "created_by",
+				foreignField: "_id",
+				as: "author"
+			}
+		}, {
+			$project: {
+				"title": 1,
+				"short_description": 1,
+				"image": 1,
+				"description": 1,
+				"category": 1,
+				"tags": 1,
+				"created_by": 1,
+				"status": 1,
+				"author.name": 1,
+				"date": 1
+			}
+		}];
 
-		if ((status && status !== 'all') || !status) {
-			query.status = status || 'published';
+		const oMATCH = {
+			$match: null
+		};
+
+		if (skip) {
+			aQUERY.push({
+				$skip : skip
+			});
 		}
 
-		if (category) {
-			query.category = category;
+		if (author && status) {
+			oMATCH.$match = {
+				created_by: new ObjectId(author),
+				status: status
+			};
+
+		} else if (category) {
+			oMATCH.$match = {
+				category: category
+			};
 		} else if (tags){
-			query.tags = tags;
-		} else if (createdBy) {
-			query.owner = createdBy;
+			oMATCH.$match = {
+				tags: tags
+			};
+		} else if (author) {
+			oMATCH.$match = {
+				created_by: new ObjectId(author)
+			};
+		} else if (status) {
+			oMATCH.$match = {
+				status: status
+			}
+		}
+		
+		if (oMATCH.$match) {
+			aQUERY.push(oMATCH);
 		}
 
-		Posts.find(query ,function(err, data){
-			if(err) {
+		Posts.aggregate(aQUERY, (err, data) => {
+			if (err) {
 				res.send({
 					error: true,
 					message: err.errmsg
-				});
+				});				
 			} else {
-				getCount(query, function(err, counts){
+				getCount(query, (err, counts) => {
 					res.send({
 						success: true,
 						list: data,
 						totalPosts: counts
 					});
-				})
-			}					
-		}).skip(skip).limit(limit);
+				})				
+			}
+		})		
 	}  
 
 	function getPost(req, res, next) {

@@ -42,7 +42,7 @@ module.exports =  function(app) {
 				description: data.description,
 				category: data.category,
 				tags: data.tags,
-				owner: data.owner,
+				created_by: data.owner,
 				date: data.date,
 				status: data.status
 			};

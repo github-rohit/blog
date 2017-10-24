@@ -20,7 +20,7 @@
             controller: 'HomeController',
 			controllerAs: 'HC',
         })
-        .when('/createdBy/:owner', {
+        .when('/author/:author', {
             templateUrl: '/assets/app/index/index.html',
             controller: 'HomeController',
 			controllerAs: 'HC',

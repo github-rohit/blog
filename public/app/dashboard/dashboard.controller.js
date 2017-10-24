@@ -33,8 +33,8 @@
 
 		this.getPosts = (page, status) => {
 			PostService.getPosts({
-				"createdBy": this.currentUser.name,
-				"status": status || 'all',
+				"author": this.currentUser._id,
+				"status": status || '',
 				"limit": this.limit,
 				"page": page || 1
 			}, res => {

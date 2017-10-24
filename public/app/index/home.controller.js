@@ -19,7 +19,7 @@
 
 		var query = {};
 
-		if (catType == "createdBy") {
+		if (catType == "author") {
 			query[category] = decodeURIComponent(catType);
 		} else if (catType) {
 			query[category] = decodeURIComponent(catType);

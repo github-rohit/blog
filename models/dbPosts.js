@@ -27,8 +27,8 @@ var dbSchema = new Schema({
 		type: String,
 		required: true
 	},
-	owner: {
-		type: String,
+	created_by: {
+		type: mongoose.Schema.ObjectId,
 		required: true
 	}, 
 	date: {
