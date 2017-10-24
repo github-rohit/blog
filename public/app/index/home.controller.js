@@ -18,9 +18,8 @@
 		});
 
 		var query = {};
-
-		if (catType == "author") {
-			query[category] = decodeURIComponent(catType);
+		if (category == "author") {
+			query[category] = decodeURIComponent(catType.split("-").pop());
 		} else if (catType) {
 			query[category] = decodeURIComponent(catType);
 		}
