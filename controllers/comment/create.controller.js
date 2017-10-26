@@ -14,14 +14,14 @@ module.exports =  function(app) {
 	
 	app.post('/api/comment', ensureAuthenticated, create);
 	
-  function create (req, res, next) {
+  	function create (req, res, next) {
 		var resObj = {};
 		var errors = {};
 		var data = req.body;
 		
 		req.checkBody('postId', 'required').notEmpty();
 		req.checkBody('comment', 'required').notEmpty();
-		req.checkBody('createdBy', 'required').notEmpty();
+		req.checkBody('created_by', 'required').notEmpty();
 		req.checkBody('date', 'required').notEmpty();
 
 		errors = req.validationErrors();
@@ -32,10 +32,10 @@ module.exports =  function(app) {
 			});
 		} else {
 
-			var comment = Comments({
+			const comment = Comments({
 				postId: data.postId,
 				comment: data.comment,
-				createdBy: data.createdBy,
+				created_by: data.created_by,
 				date: data.date,
 			});
 			

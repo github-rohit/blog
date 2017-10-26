@@ -1,12 +1,13 @@
 (function(app){
 	
 	app.module.controller('BlogCreateController', BlogCreateController);
-	BlogCreateController.$inject = ['PostService', 'FormErrorService', 'AuthenticationService']
+	BlogCreateController.$inject = ['$scope', '$rootScope', 'PostService', 'FormErrorService', 'AuthenticationService']
 
-	function BlogCreateController(PostService, FormErrorService, AuthenticationService) {
-		const path = window.location.pathname;
-		const patharr = path.split('/');
-		const postId = patharr.length > 2 ? path.split('/').pop() : '';
+	function BlogCreateController($scope, $rootScope, PostService, FormErrorService, AuthenticationService) {
+		var _this = this;
+		var path = window.location.pathname;
+		var patharr = path.split('/');
+		var postId = patharr.length > 2 ? path.split('/').pop() : '';
 
 		this.currentUser = AuthenticationService.GetUser();
 		this.frm = {
@@ -36,44 +37,47 @@
 			this.frm.action = 'update';
 
 			if (PostService.list.length) {
-				angular.forEach(PostService.list, postObj => {
+				angular.forEach(PostService.list, function(postObj) {
 					if (postObj._id === postId) {
-						this.frm.data = postObj;
+						_this.frm.data = postObj;
 					}
 				});
 			} else {
 				PostService.getPostsById({
 					id: postId
-				}, (response) => {
+				}, function (response) {
 					var res = response.data;
 					if (res.success) {
-						this.frm.data = res.list;
+						_this.frm.data = res.list;
 					} else {
-						this.error = true;
+						_this.error = true;
 					}
 				});
 			}
 		}
 
-		this.submit = () => {
-			this.frm.data.owner = this.currentUser._id;
-			this.frm.data.date = new Date();
-			this.frm.data.action = this.frm.action;
-
-			PostService.create(this.frm.data, (res) => {
-				const data = res.data || {};
-				this.success = false;
+		this.submit = function () {
+			_this.frm.data.owner = _this.currentUser._id;
+			_this.frm.data.date = new Date();
+			_this.frm.data.action = _this.frm.action;
+			
+			PostService.create(_this.frm.data, function (res) {
+				var data = res.data || {};
+				_this.success = false;
 				
 				if (data.errors) {
-					this.frm.error = FormErrorService.show(data.errors);
+					_this.frm.error = FormErrorService.show(data.errors);
 				} else if (data.success) {
-					this.success = true;
-					if (this.frm.data.status == 'save') {
-						this.successMsg = 'Post saved successfully';
+					_this.success = true;
+					if (_this.frm.data.status == 'save') {
+						_this.successMsg = 'Post saved successfully';
 					} else {
-						this.successMsg = 'Post published successfully';
+						_this.successMsg = 'Post published successfully';
 					}
-					
+
+					if (!postId) {
+						_this.frm.data = {};
+					}
 				}
 			});
 		};

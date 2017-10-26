@@ -1,5 +1,17 @@
 const Users = require('../models/dbUsers');
 const passport = require('passport');
+const multer = require('multer');
+const UPLOAD_PATH = "public/uploads/";
+
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, UPLOAD_PATH)
+	},
+	filename: function (req, file, cb) {
+		cb(null, Date.now() + file.originalname);
+	}
+});
+const Upload = multer({ storage: storage }).single('avatar');
 
 module.exports =  function(app) {
 	
@@ -12,9 +24,9 @@ module.exports =  function(app) {
 	};
 
 	app.post('/api/user/update', ensureAuthenticated, create);
-	//app.post('/api/user/update', create);
+	app.post('/api/user/upload', ensureAuthenticated, uploadImage);
 
-  function create (req, res, next) {
+  	function create (req, res, next) {
 		var resObj = {};
 		var errors = {};
 		var data = req.body;
@@ -40,7 +52,6 @@ module.exports =  function(app) {
 					message: err.errmsg
 				});
 			} else {
-				console.log(user);
 				res.send({
 					success: true,
 					message: 'Success'
@@ -49,5 +60,38 @@ module.exports =  function(app) {
 		});
 
 	}  
+
+	function uploadImage (req, res) {
+		Upload(req, res, function(err) {
+			if (err) {
+				console.log("file upload error: ", err)
+				res.send({
+					error: true
+				})
+			} else {
+				updateImage(req, res);
+			}
+		});
+	}
+
+	function updateImage (req, res) {
+		Users.update({
+			_id: req.body.id
+		}, {
+			avatar: req.file.filename
+		}, function(err, user){
+			if(err) {
+				res.send({
+					error: true,
+					message: err.errmsg
+				});
+			} else {
+				res.send({
+					success: true,
+					message: 'Success'
+				});
+			}					
+		});
+	}
 
 };

@@ -3,20 +3,21 @@
 
  	app.module.factory('PostService', PostService);
  	
-	PostService.$inject = ['$http'];
+	PostService.$inject = ['$http', "$rootScope"];
 
-	function PostService($http) {
-		
+	function PostService($http, $rootScope) {
+		function getcategorylist () {
+			$http({
+				method: 'GET',
+				url: '/api/getcategorylist',
+				async : true,
+			}).then(function (res) {
+				$rootScope.category = res;
+			});
+		}
 		var service = {
 			list: [],
-			category: {
-				"technology": "Technology",
-				"music": "Music",
-				"fashion": "Fashion",
-				"movie": "Movie",
-				"law": "law",
-				"history": "History",
-			},
+			category: $rootScope.category,
 			tags: {
 				"technology": "Technology",
 				"music": "Music",

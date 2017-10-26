@@ -1,4 +1,5 @@
 const Posts = require('../../models/dbPosts');
+const Categories = require('../../models/dbCategories');
 const passport = require('passport');
 
 module.exports =  function(app) {
@@ -29,13 +30,30 @@ module.exports =  function(app) {
 		req.checkBody('status', 'required').notEmpty();
 
 		errors = req.validationErrors();
-
+		const categories = Categories({
+			categorie: "Technology",
+			count: 0
+		})
+		categories.save((err) => {
+			if(err) {
+				res.send({
+					error: true,
+					message: err.errmsg
+				});
+			} else {
+				res.send({
+					success: true,
+					message: 'Success'
+				});
+			}					
+		});
+		return;
 		if (errors) {
 			res.send({
 				errors: errors
 			});
 		} else {
-			var postObj = {
+			const postObj = {
 				title: data.title,
 				short_description: data.short_description,
 				image: data.image,
@@ -48,7 +66,7 @@ module.exports =  function(app) {
 			};
 
 			if (data.action === 'update') {
-				Posts.update({_id: data._id}, postObj, function(err, user){
+				Posts.update({_id: data._id}, postObj, (err, user) => {
 					if(err) {
 						res.send({
 							error: true,
@@ -62,8 +80,8 @@ module.exports =  function(app) {
 					}					
 				});				
 			} else {
-				var newPost = Posts(postObj);
-				newPost.save(function(err){
+				const newPost = Posts(postObj);
+				newPost.save((err) => {
 					if(err) {
 						res.send({
 							error: true,

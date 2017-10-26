@@ -14,16 +14,30 @@
 				} else{}
 			}
 		};
+
+		xhr.send(null);
+		xhr.open("GET", "/api/getcategorylist", false);
+		xhr.onload = function (e) {
+			if (xhr.readyState === 4) {
+				if (xhr.status === 200) {
+					$rootScope.category = JSON.parse(xhr.responseText);
+				} else {
+					$rootScope.category = {};
+				}
+			}
+		};
 		xhr.send(null);
 
-		const blogLogin = $cookies.get('BLOG.LOGIN');
+		var blogLogin = $cookies.get('BLOG.LOGIN');
 
 		$rootScope.globals = blogLogin ? JSON.parse(blogLogin) : {};
+
+
 
 		if ($rootScope.globals.currentUser) {
 			AuthenticationService.isLogin = true;
 		}
-
+		
 		$rootScope.$on('$routeChangeStart', function(event, next, current) {
 			routeChangeStart(event, next, current);
 		});

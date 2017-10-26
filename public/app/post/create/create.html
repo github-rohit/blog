@@ -27,7 +27,7 @@
 						<div class="form-line">
 								<label class="form-label">Category<span>*</span></label>
 								<select name="category" class="form-control" ng-model="BCC.frm.data.category" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required>
-									<option ng-repeat="(key, label) in BCC.category" value="{{ key }}">{{ label }}</option>
+									<option ng-repeat="(i, obj) in BCC.category" value="{{ obj.category }}">{{ obj.category }}</option>
 								</select>
 						</div>
 						<p ng-show="(!login.category.$valid && login.category.$touched) || BCC.frm.error['category']" class="text-danger">{{ BCC.frm.msg.required }}</p>

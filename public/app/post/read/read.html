@@ -4,6 +4,7 @@
 			<div class=" ui-post-page">
 				<h1>{{BRC.post.title}}</h1>
 				<p class="byline"><strong>By</strong> <a href="/author/{{BRC.post.author[0].name | replaceSpaceWithDash}}-{{BRC.post.created_by}}">{{BRC.post.author[0].name}}</a> <i class="fa fa-circle"></i> {{BRC.post.date | amUtc | amDateFormat:'MMMM Do YYYY'}}</p>
+				<hr>
 				<div ng-bind-html="BRC.post.description" class="description"></div>
 			</div>
 			<div class="ui-add-comment">
@@ -15,7 +16,7 @@
 					<ul class="list-unstyled">
 						<li ng-repeat="item in BRC.comments.list">
 							<p>{{item.comment}}</p>
-							<div class="byline"><strong>By</strong> <a href="/createdBy/{{item.createdBy}}">{{item.createdBy}}</a> <i class="fa fa-circle"></i> {{BRC.post.date | amUtc | amDateFormat:'MMMM Do YYYY'}}</div>
+							<div class="byline"><strong>By</strong> <a href="/author/{{item.author[0].name | replaceSpaceWithDash}}-{{item.created_by}}">{{item.author[0].name}}</a> <i class="fa fa-circle"></i> {{BRC.post.date | amUtc | amDateFormat:'MMMM Do YYYY'}}</div>
 						</li>
 					</ul>
 				</div>
@@ -36,7 +37,7 @@
 		<div class="col-md-3 col-sm-3 ui-right-block">
 			<h4>Categories</h4>
 			<ul class="ui-post-cat">
-				<li ng-repeat="(key, label) in BRC.category"><a href="/category/{{key}}">{{label}}</a></li>
+				<li ng-repeat="(i, obj) in BRC.category"><a href="/category/{{obj.category}}">{{obj.category}}</a></li>
 			</ul>
 			<h4>Tags</h4>
 			<ul class="ui-post-cat">

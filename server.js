@@ -11,6 +11,7 @@ const blogReadController = require('./controllers/post/read.controller');
 const blogUpdateController = require('./controllers/post/update.controller');
 const commentReadController = require('./controllers/comment/read.controller');
 const createReadController = require('./controllers/comment/create.controller');
+const categoriesController = require('./controllers/categories.controller');
 
 const server = express();
 const port = process.env.PORT || 3000;
@@ -20,11 +21,6 @@ server.set('view engine', 'ejs');
 	
 // serve angular front end files from root path
 server.use('/', express.static('views', { redirect: false }));
- 
-// rewrite virtual urls to angular app to enable refreshing of internal pages
-server.get('*', function (req, res, next) {
-    res.sendFile(path.resolve('views/index.html'));
-});
 
 serverConfig(server);
 loginController(server);
@@ -36,5 +32,11 @@ blogUpdateController(server);
 
 commentReadController(server);
 createReadController(server);
+categoriesController(server);
+ 
+// rewrite virtual urls to angular app to enable refreshing of internal pages
+server.get('*', function (req, res, next) {
+    res.sendFile(path.resolve('views/index.html'));
+});
 
 server.listen(port);

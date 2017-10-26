@@ -1,9 +1,9 @@
 (function(app){
 
 	app.module.controller('HomeController', HomeController);
-	HomeController.$inject = ['$scope', 'PostService', 'PagerService']
+	HomeController.$inject = ['$scope', 'PostService', 'PagerService', "UserUpdateService"]
 
-	function HomeController($scope, PostService, PagerService) {
+	function HomeController($scope, PostService, PagerService, UserUpdateService ) {
 		const self = this;
 		const path = window.location.pathname;
 		const splitPath = path.split('/');
@@ -47,6 +47,22 @@
 
 		this.getPosts(1);
 
+		new qq.FineUploader({
+			element: document.getElementById('fine-uploader'),
+			request: {
+				endpoint: '/api/user/upload',
+				inputName: "avatar",
+				params: {
+					id: '596a2cd48c95e7453c640392'
+				}
+			},
+			deleteFile: {
+				enabled: true,
+				endpoint: '/api/user/upload'
+			},
+			validation: {
+				allowedExtensions: ['png', 'jpg', 'jpge', 'gif']
+			}
+		});
 	}
-
 })(app);
