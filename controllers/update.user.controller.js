@@ -88,7 +88,8 @@ module.exports =  function(app) {
 			} else {
 				res.send({
 					success: true,
-					message: 'Success'
+					message: 'Success',
+					filename:  req.file.filename
 				});
 			}					
 		});

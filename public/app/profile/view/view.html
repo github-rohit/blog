@@ -9,8 +9,12 @@
 		<h2 class="user-name"><i class="fa" ng-class="{'fa-male': PVC.user.gender === 'male',  'fa-female': PVC.user.gender === 'female'}"></i> {{PVC.user.name}}</h2>
 		<p><i class="fa fa-envelope-o"></i> {{PVC.user.email}}</p>
 		<div class="aboutme clearfix">
-			<img ng-if="PVC.user.avatar" ng-src="/assets/uploads/{{PVC.user.avatar}}">
-			<img ng-if="!PVC.user.avatar" ng-src="/assets/img/user.png">
+			<div class="profile-container-left">
+				<div class="profile-container-img">
+					<img ng-if="PVC.user.avatar" ng-src="/assets/uploads/{{PVC.user.avatar}}">
+					<img ng-if="!PVC.user.avatar" ng-src="/assets/img/user.png">
+				</div>
+			</div>
 			<div>
 				<h3>ABOUT ME</h3>
 				<p ng-if="PVC.user.aboutme">{{PVC.user.aboutme}}</p>

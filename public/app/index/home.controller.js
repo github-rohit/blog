@@ -46,23 +46,5 @@
 		}
 
 		this.getPosts(1);
-
-		new qq.FineUploader({
-			element: document.getElementById('fine-uploader'),
-			request: {
-				endpoint: '/api/user/upload',
-				inputName: "avatar",
-				params: {
-					id: '596a2cd48c95e7453c640392'
-				}
-			},
-			deleteFile: {
-				enabled: true,
-				endpoint: '/api/user/upload'
-			},
-			validation: {
-				allowedExtensions: ['png', 'jpg', 'jpge', 'gif']
-			}
-		});
 	}
 })(app);

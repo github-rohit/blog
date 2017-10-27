@@ -6,9 +6,9 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		  </button>
-		<a class="navbar-brand" href="/"><img height="40" src="/assets/img/logo_white.svg" alt="oogwave"><span>BLOG</span></a>
+		<a class="navbar-brand" href="/"><img height="40" src="/assets/img/logo_white.svg" alt="nirmalrohit.com"><span>BLOG</span></a>
 	</div>
-	<nav class="navbar" ng-class="{in: NAV.displayNav}">
+	<nav class="navbar" ng-class="{in: NAV.displayNav}" ng-click="NAV.displayNav = false">
 		<ul class="nav navbar-nav">
 			<li ng-class="NAV.getClass('/')"><a href="/">HOME</a></li>
 			<li ng-class="NAV.getClass('/dashboard')" ng-if="NAV.Authentication"><a href="/dashboard">MY POSTS</a></li>
@@ -19,10 +19,20 @@
 		</ul>
 		<ul class="nav navbar-nav navbar-right" ng-if="NAV.Authentication">
 			<li ng-class="{show: NAV.showDropDown}">
-				<a href="javascript:void(0)" ng-click="NAV.show()">{{NAV.currentUser.name}} <i class="fa fa-angle-down"></i></a>
+				<a href="javascript:void(0)" ng-click="NAV.show()" class="user-avatar">
+					<img ng-if="!NAV.currentUser.avatar" ng-src="/assets/uploads/{{NAV.currentUser.avatar}}">
+					<span ng-if="NAV.currentUser.avatar">{{NAV.currentUser.name | userAvatarText}}</span>
+				</a>
 				<ul class="dropdown-menu">
-					<li><a href="user/profile">MY ACCOUNT</a></li>
-					<li><a href="user/logout">LOGOUT</a></li>
+					<li><a href="user/profile" class="ui-myaccount clearfix">
+						<div class="user-avatar">
+							<img ng-if="NAV.currentUser.avatar" ng-src="/assets/uploads/{{NAV.currentUser.avatar}}">
+							<span ng-if="!NAV.currentUser.avatar">{{NAV.currentUser.name | userAvatarText}}</span>
+						</div>
+						<span class="uname">{{NAV.currentUser.name}}</span>
+						<span class="email">{{NAV.currentUser.email}}</span>
+					</a></li>
+					<li><a href="user/logout" class="ui-bg">LOGOUT</a></li>
 				</ul>
 			</li>
 		</ul>

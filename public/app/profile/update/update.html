@@ -11,7 +11,13 @@
 		<h2 class="user-name">{{PUC.formData.name}}</h2>
 		<p>{{PUC.formData.email}}</p>
 		<div class="aboutme clearfix">
-			<img ng-src="{{PUC.formData.avatar || '/assets/img/user.png'}}">
+			<div class="profile-container-left">
+				<div class="profile-container-img">
+					<img ng-if="PUC.formData.avatar" ng-src="/assets/uploads/{{PUC.formData.avatar}}">
+					<img ng-if="!PUC.formData.avatar" ng-src="/assets/img/user.png">
+					<div id="fine-uploader"></div>
+				</div>
+			</div>
 			<div>
 				<h3>ABOUT ME</h3>
 				<p><textarea rows="4" class="form-control" name="aboutme" ng-model="PUC.formData.aboutme" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)"></textarea></p>

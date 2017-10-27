@@ -15,6 +15,20 @@
 
 				});
 			},
+			upload: function (data, callback) {
+				$http({
+					method: 'POST',
+					url: '/api/user/upload',
+					headers: {
+					  'Content-Type': "application/json"
+					},
+					data: data				
+				}).then(function(response){
+					callback(response);
+				}, function(response){
+
+				});
+			},
 			delete: function (data, callback) {
 				$http.delete('/api/user/delete', data).then(function(response){
 					callback(response);
