@@ -20,8 +20,8 @@
 		<ul class="nav navbar-nav navbar-right" ng-if="NAV.Authentication">
 			<li ng-class="{show: NAV.showDropDown}">
 				<a href="javascript:void(0)" ng-click="NAV.show()" class="user-avatar">
-					<img ng-if="!NAV.currentUser.avatar" ng-src="/assets/uploads/{{NAV.currentUser.avatar}}">
-					<span ng-if="NAV.currentUser.avatar">{{NAV.currentUser.name | userAvatarText}}</span>
+					<img ng-if="NAV.currentUser.avatar" ng-src="/assets/uploads/{{NAV.currentUser.avatar}}">
+					<span ng-if="!NAV.currentUser.avatar">{{NAV.currentUser.name | userAvatarText}}</span>
 				</a>
 				<ul class="dropdown-menu">
 					<li><a href="user/profile" class="ui-myaccount clearfix">
