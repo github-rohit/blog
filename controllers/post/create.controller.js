@@ -30,24 +30,7 @@ module.exports =  function(app) {
 		req.checkBody('status', 'required').notEmpty();
 
 		errors = req.validationErrors();
-		const categories = Categories({
-			categorie: "Technology",
-			count: 0
-		})
-		categories.save((err) => {
-			if(err) {
-				res.send({
-					error: true,
-					message: err.errmsg
-				});
-			} else {
-				res.send({
-					success: true,
-					message: 'Success'
-				});
-			}					
-		});
-		return;
+
 		if (errors) {
 			res.send({
 				errors: errors

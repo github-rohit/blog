@@ -2,7 +2,7 @@
 	<li class="no-record" ng-if="!posts.length">:) No record found.</li>
 	<li ng-repeat="(index, post) in posts" ng-class="{'published': owner && post.status === 'published'}">
 		<span ng-if="owner" class="action-link">
-			<a class="btn btn-default btn-circle" href="javascript:void(0)" ng-click="publish({id: post._id, index: index})" title="Publish this post"><i class="fa fa-bullhorn"></i></a>
+			<a class="btn btn-default btn-circle publish-link" href="javascript:void(0)" ng-click="publish({id: post._id, index: index})" title="Publish this post"><i class="fa fa-bullhorn"></i></a>
 			<a class="btn btn-default btn-circle" href="/create/{{post._id}}"title="Edit this post"><i class="fa fa-pencil"></i></a>
 		</span>
 		<h2 class="post-title">{{post.title}}</h2>

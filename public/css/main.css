@@ -164,6 +164,9 @@ h1, h2, h3, h4, h5, h6 {
 	height: 100%;
 	float: left;
 }
+.navbar-nav.navbar-right:last-child {
+	margin-right: 0;
+}
 /**/
 .page-header-top {
 	background: white;		
@@ -368,6 +371,9 @@ h1, h2, h3, h4, h5, h6 {
 .ui-list li.published {
 	border-bottom: 3px solid rgba(67, 133, 61, .5);
 }
+.ui-list li.published .publish-link {
+	display: none;
+}
 .ui-list li h2.post-title {
 	margin-top: 0;
 	margin-right: 64px;
@@ -491,7 +497,7 @@ h1, h2, h3, h4, h5, h6 {
 .ui-add-comment .ui-add-comment-header h4 {
 	display: inline-block;
 	padding: 6px 15px;
-	background: rgba(67, 133, 61, .65);
+	background: rgba(41, 128, 185, .65);
 	color: #FFF;
 	font-size: 16px;
 	margin: 0;

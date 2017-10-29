@@ -44,47 +44,33 @@ module.exports =  function(app) {
 			}
 		}];
 
-		const oMATCH = {
-			$match: null
-		};
-
 		if (skip) {
 			aQUERY.push({
 				$skip : skip
 			});
 		}
 
-		if (id) {
-			oMATCH.$match = {
-				_id: new ObjectId(id)
-			};
-		} else if (author && status) {
-			oMATCH.$match = {
-				created_by: new ObjectId(author),
-				status: status
-			};
+		query.status = status || "published"
 
-		} else if (category) {
-			oMATCH.$match = {
-				category: category
-			};
-		} else if (tags){
-			oMATCH.$match = {
-				tags: tags
-			};
-		} else if (author) {
-			oMATCH.$match = {
-				created_by: new ObjectId(author)
-			};
-		} else if (status) {
-			oMATCH.$match = {
-				status: status
-			}
+		if (id) {
+			query._id = new ObjectId(id);
 		}
 		
-		if (oMATCH.$match) {
-			aQUERY.push(oMATCH);
+		if (author) {
+			query.created_by = new ObjectId(author);
 		}
+		
+		if (category) {
+			query.category = category;
+		} 
+		
+		if (tags){
+			query.tags = tags;
+		}
+		
+		aQUERY.push({
+			$match: query
+		});
 		
 		Posts.aggregate(aQUERY, (err, data) => {
 			if (err) {
