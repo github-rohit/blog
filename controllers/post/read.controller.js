@@ -1,3 +1,4 @@
+const Config = require('../../config/config');
 const Posts = require('../../models/dbPosts');
 const Users = require('../../models/dbUsers');
 const ObjectId = require('mongoose').Types.ObjectId; 
@@ -40,7 +41,8 @@ module.exports =  function(app) {
 				"created_by": 1,
 				"status": 1,
 				"author.name": 1,
-				"date": 1
+				"date": 1,
+				"post_reference_id": 1
 			}
 		}];
 
@@ -50,7 +52,7 @@ module.exports =  function(app) {
 			});
 		}
 
-		query.status = status || "published"
+		query.status = Config.postStatus[status] || Config.postStatus.published
 
 		if (id) {
 			query._id = new ObjectId(id);
@@ -80,6 +82,7 @@ module.exports =  function(app) {
 				});				
 			} else {
 				getCount(query, (err, counts) => {
+					
 					res.send({
 						success: true,
 						list: data,

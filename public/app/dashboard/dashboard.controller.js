@@ -13,7 +13,7 @@
 		this.activeTab = "published";
 
 		this.publish = function (obj) {
-			PostService.update({
+			PostService.publish({
 				_id: obj.id,
 				status: 'publish'
 			}, function (res) {

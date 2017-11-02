@@ -27,7 +27,7 @@
 				"history": "History",
 			},
 			create: function (data, callback) {
-				$http.post('/api/create', data).then(function(response){
+				$http.post('/api/post/create', data).then(function(response){
 					callback(response);
 				}, function(response){
 
@@ -63,6 +63,13 @@
 			},
 			update: function (data, callback) {
 				$http.post('/api/post/update', data).then(function(response){
+					callback(response);
+				}, function(response){
+
+				});
+			},
+			publish: function (data, callback) {
+				$http.post('/api/post/publish', data).then(function(response){
 					callback(response);
 				}, function(response){
 

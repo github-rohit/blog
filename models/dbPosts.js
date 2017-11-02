@@ -1,11 +1,10 @@
-var mongoose = require('mongoose');
-var Schema  = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema  = mongoose.Schema;
 
-var dbSchema = new Schema({
+const dbSchema = new Schema({
 	title: {
 		type: String,
-		required: true,
-		unique: true
+		required: true
 	},
 	image: {
 		type: String,
@@ -38,9 +37,19 @@ var dbSchema = new Schema({
 	status: {
 		type: String,
 		required: true
+	},
+	post_reference_id: {
+		type: mongoose.Schema.ObjectId
 	}
 });
-    
-var Posts = mongoose.model('Posts', dbSchema);
+
+const Posts = mongoose.model('Posts', dbSchema);
+
+Posts.collection.ensureIndex({
+	"title": 1, 
+	"post_reference_id": 1 
+}, { 
+	unique: true 
+});
 
 module.exports = Posts;

@@ -13,8 +13,7 @@
 		this.frm = {
 			data: {},
 			error: {},
-			msg: FormErrorService.messages,
-			action: 'new'
+			msg: FormErrorService.messages
 		};
 
 		this.category = PostService.category;
@@ -34,8 +33,6 @@
 		};
 		
 		if (postId) {
-			this.frm.action = 'update';
-
 			if (PostService.list.length) {
 				angular.forEach(PostService.list, function(postObj) {
 					if (postObj._id === postId) {
@@ -48,18 +45,17 @@
 				}, function (response) {
 					var res = response.data;
 					if (res.success) {
-						_this.frm.data = res.list;
+						_this.frm.data = res.list[0];
 					} else {
 						_this.error = true;
 					}
 				});
 			}
 		}
-
+		
 		this.submit = function () {
 			_this.frm.data.owner = _this.currentUser._id;
 			_this.frm.data.date = new Date();
-			_this.frm.data.action = _this.frm.action;
 			
 			PostService.create(_this.frm.data, function (res) {
 				var data = res.data || {};
@@ -68,8 +64,15 @@
 				if (data.errors) {
 					_this.frm.error = FormErrorService.show(data.errors);
 				} else if (data.success) {
+					
 					_this.success = true;
-					if (_this.frm.data.status == 'save') {
+
+					if (data.post) {
+						_this.frm.data._id = data.post._id;
+						_this.frm.data.status = data.post.status;
+					}
+
+					if (_this.frm.data._status == 'draft') {
 						_this.successMsg = 'Post saved successfully';
 					} else {
 						_this.successMsg = 'Post published successfully';

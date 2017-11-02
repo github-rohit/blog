@@ -7,5 +7,10 @@
 	"status": {
 		"pending": "pending",
 		"active": "active"
+	},
+	"postStatus": {
+		"published": "published",
+		"draft": "draft",
+		"deleted": "deleted"
 	}
 }

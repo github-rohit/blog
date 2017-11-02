@@ -9,8 +9,13 @@ module.exports =  function(app) {
 		const postId = req.body.postId
 		const page = req.body.page || 1;
 		const skip = page  > 1 ? limit * ( page - 1 ) : 0;
+
 		const aQUERY = [{
 			$limit: req.body.limit || 10
+		}, {
+			$match: {
+				postId: postId
+			}
 		}, {
 			$lookup: {
 				from: "users",

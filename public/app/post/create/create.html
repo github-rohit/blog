@@ -3,14 +3,16 @@
 		<div class="col-md-10 col-md-offset-1">
 			<div class="card">
 				<div class="card-heading card-padding">
-					<h1><span ng-if="BCC.frm.action === 'new'">Create New Post</span><span ng-if="BCC.frm.action === 'update'">Update Post</span></h1>
+					<h1><span ng-if="!BCC.frm.data._id">Create New Post</span><span ng-if="BCC.frm.data._id">Update Post</span></h1>
+					<h3 ng-if="BCC.frm.data.title">{{BCC.frm.data.title}}</h3>
 				</div>
 				<div class="card-body card-padding">
 					<form class="angular-form" ng-submit="BCC.submit()" name="login" novalidate >
-					<div class="form-group">
+					<div class="form-group" ng-if="!BCC.frm.data.title">
 						<div class="form-line">
-								<label class="form-label">Blog Title<span>*</span></label>
-								<input type="text" name="title" class="form-control" ng-model="BCC.frm.data.title" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required/>
+							<label class="form-label">Blog Title<span>*</span></label>
+
+							<input type="text" name="title" class="form-control" ng-model="BCC.frm.data.title" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required/>
 						</div>
 						<p ng-show="(!login.title.$valid && login.title.$touched) || BCC.frm.error['title']" class="text-danger">{{ BCC.frm.msg.required }}</p>
 					</div>
@@ -58,8 +60,8 @@
 					</div>
 
 					<p class="text-info">* fields are required</p>
-					<input type="submit" class="btn btn-primary" value="Save" ng-click="BCC.frm.data.status = 'save'"/>
-					<input type="submit" class="btn btn-success" value="Save & Publish" ng-click="BCC.frm.data.status = 'published'"/>
+					<input type="submit" class="btn btn-primary" value="Save" ng-click="BCC.frm.data._status = 'draft'"/>
+					<input type="submit" class="btn btn-success" value="Save & Publish" ng-click="BCC.frm.data._status = 'published'"/>
 					</form>
 				</div>
 			</div>
