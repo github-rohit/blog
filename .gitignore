@@ -1,3 +1,4 @@
 node_modules/
 public/img/my_logo.ai
 public/uploads
+config/config.json

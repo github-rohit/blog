@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
-
+const config = require('./config/config');
 const serverConfig = require('./config/server');
 const loginController = require('./controllers/login.controller');
 const registerController = require('./controllers/register.controller');
@@ -14,7 +14,7 @@ const createReadController = require('./controllers/comment/create.controller');
 const categoriesController = require('./controllers/categories.controller');
 
 const server = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 server.use('/assets', express.static(__dirname + '/public'));
 server.set('view engine', 'ejs');

@@ -1,16 +1,13 @@
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var expressValidator = require('express-validator');
-var session = require('express-session');
-var passport = require('passport');
-var localStrategy = require('passport-local').Strategy;
-var passportHttp = require('passport-http');
-var flash = require('connect-flash');
-var mongoose = require('mongoose');
-
-var config = require('./config');
-var dbConnection = require('./index');
-var date = new Date();
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const expressValidator = require('express-validator');
+const session = require('express-session');
+const passport = require('passport');
+const localStrategy = require('passport-local').Strategy;
+const passportHttp = require('passport-http');
+const flash = require('connect-flash');
+const mongoose = require('mongoose');
+const config = require('./config');
 
 module.exports =  function(app) {
 
@@ -42,7 +39,7 @@ module.exports =  function(app) {
 	
 	app.use(session({
 		name: 'BLOG',
-		secret: config.secret,
+		secret: process.env.SECRET,
 		saveUninitialized: true,
 		path : '/',
 		resave: false,
@@ -57,5 +54,5 @@ module.exports =  function(app) {
 	app.use(passport.session());
 	app.use(cookieParser());
 
-	mongoose.connect(dbConnection.getDbConnectionString());
+	mongoose.connect(config.getDbConnectionString());
 };
