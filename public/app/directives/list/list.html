@@ -1,20 +1,19 @@
 <ul class="ui-list">
 	<li class="no-record" ng-if="!posts.length">:) No record found.</li>
-	<li ng-repeat="(index, post) in posts" ng-class="{'published': owner && post.status === 'published'}">
+	<li ng-repeat="(index, post) in posts" ng-class="{'published': owner && post.status === 'published', 'has-image': post.image}">
 		<span ng-if="owner" class="action-link">
-			<a class="btn btn-default btn-circle publish-link" href="javascript:void(0)" ng-click="publish({id: post._id, index: index})" title="Publish this post"><i class="fa fa-bullhorn"></i></a>
+			<!-- <a class="btn btn-default btn-circle publish-link" href="javascript:void(0)" ng-click="publish({id: post._id, index: index})" title="Publish this post"><i class="fa fa-bullhorn"></i></a> -->
 			<a class="btn btn-default btn-circle" href="/create/{{post._id}}"title="Edit this post"><i class="fa fa-pencil"></i></a>
 		</span>
 		<h2 class="post-title">{{post.title}}</h2>
-		<p class="byline"><span ng-if="!owner"><strong>By</strong> <a href="/author/{{post.author[0].name | replaceSpaceWithDash}}-{{post.created_by}}">{{post.author[0].name}}</a><i class="fa fa-circle"></i></span>  {{post.date | amUtc | amDateFormat:'MMMM Do YYYY'}}</p>
+		<p class="byline"><span ng-if="!owner"><strong>By</strong> <a href="/author/{{post.author[0].name | replaceSpaceWithDash}}-{{post.created_by}}">{{post.author[0].name}}</a><i class="fa fa-circle"></i></span>  {{post.date | amUtc | amDateFormat:'MMMM Do YYYY'}}
+		</p>
 		<div class="description clearfix">
 			<img class="thumb" src="{{post.image}}" /> 
 			<div>
-				<p>{{post.short_description}} <br> <a href="/post/{{post._id}}" class="read-more small">READ MORE</a></p>
-				<p><span class="label label-default">{{post.tags}}</span></p>
+				<p ng-if="post.tags.length" class="tags"><i class="fa fa-tag fa-rotate-90"></i> <a href="/tags/{{tag.text}}" ng-repeat="tag in post.tags">{{tag.text}}</a> </p>
+				<p>{{post.description | getShortDescription}} <br> <a href="/post/{{post._id}}" class="read-more small">READ MORE</a></p>
 			</div>
 		</div>
-		<!-- <span ng-if="owner" class="label " ng-class="{'label-success': post.status === 'published', 'label-default': post.status === 'new'}">{{post.status}}</span> -->		
-		<span ng-if="owner && post.status === 'published'" class="status">{{post.status}}</span>
 	</li>
 </ul>

@@ -39,6 +39,7 @@
 		}
 		
 		$rootScope.$on('$routeChangeStart', function(event, next, current) {
+			$rootScope.bodyClass = "";
 			routeChangeStart(event, next, current);
 		});
 

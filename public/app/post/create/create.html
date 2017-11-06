@@ -1,74 +1,84 @@
 <div class="container">
-	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
-			<div class="card">
-				<div class="card-heading card-padding">
-					<h1><span ng-if="!BCC.frm.data._id">Create New Post</span><span ng-if="BCC.frm.data._id">Update Post</span></h1>
-					<h3 ng-if="BCC.frm.data.title">{{BCC.frm.data.title}}</h3>
+	<div class="angular-new-form-warpper">
+	<form class="angular-form-create" ng-submit="BCC.submit()" name="login" novalidate>
+		<div class="col-left" ng-class="{'col-left-fixed': BCC.colLeftFixed}">
+			<div class="form-title-read" expanding-textarea ng-if="BCC.frm.data._id">{{BCC.frm.data.title}}</div>
+			<span ng-if="!BCC.frm.data._id">
+			<textarea set-focus expanding-textarea disable-enter-key name="title" class="form-control form-title" ng-model="BCC.frm.data.title" placeholder="Enter Title" required/></textarea>
+			<p ng-show="(!login.title.$valid && login.title.$touched) || BCC.frm.error['title']" class="text-danger">{{ BCC.frm.msg.required }}</p>
+			</span>
+			<!-- <p ng-show="(!login.description.$valid && login.description.$touched) || BCC.frm.error['description']" class="text-danger">{{ BCC.frm.msg.required }}</p> -->
+			<textarea ui-tinymce="BCC.tinymceOptions" name="description" class="form-control" ng-model="BCC.frm.data.description" required/></textarea>
+
+		</div>
+		<div class="col-right" ng-class="{'col-right-fixed': BCC.colRightFixed}">
+			<div class="panel-group">
+				<div class="panel panel-default">
+					<div class="panel-heading">Featured image url</div>
+					<div class="panel-body">
+						<input type="text" type="text" name="image" class="form-control" ng-model="BCC.frm.data.image" placeholder="Featured Image Url" required/>
+						<img ng-src="{{BCC.frm.data.image}}" class="img-responsive"/>
+					</div>
 				</div>
-				<div class="card-body card-padding">
-					<form class="angular-form" ng-submit="BCC.submit()" name="login" novalidate >
-					<div class="form-group" ng-if="!BCC.frm.data.title">
-						<div class="form-line">
-							<label class="form-label">Blog Title<span>*</span></label>
-
-							<input type="text" name="title" class="form-control" ng-model="BCC.frm.data.title" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required/>
-						</div>
-						<p ng-show="(!login.title.$valid && login.title.$touched) || BCC.frm.error['title']" class="text-danger">{{ BCC.frm.msg.required }}</p>
-					</div>
-
-					<div class="form-group">
-						<div class="form-line">
-								<label class="form-label">Image<span>*</span></label>
-								<input type="text" name="image" class="form-control" ng-model="BCC.frm.data.image" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required/>
-						</div>
-						<p ng-show="(!login.image.$valid && login.image.$touched) || BCC.frm.error['image']" class="text-danger">{{ BCC.frm.msg.required }}</p>
-					</div>	
-
-					<div class="form-group">
-						<div class="form-line">
-								<label class="form-label">Category<span>*</span></label>
-								<select name="category" class="form-control" ng-model="BCC.frm.data.category" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required>
-									<option ng-repeat="(i, obj) in BCC.category" value="{{ obj.category }}">{{ obj.category }}</option>
-								</select>
-						</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">Category <span class="text-danger small">(required)</span></div>
+					<div class="panel-body">
+						<select name="category" class="form-control" ng-model="BCC.frm.data.category" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)"
+						required>
+							<option ng-repeat="(i, obj) in BCC.category" value="{{ obj.category }}">{{ obj.category }}</option>
+						</select>
 						<p ng-show="(!login.category.$valid && login.category.$touched) || BCC.frm.error['category']" class="text-danger">{{ BCC.frm.msg.required }}</p>
-					</div>	
-
-					<div class="form-group">
-						<div class="form-line">
-								<label class="form-label">Tags<span>*</span></label>
-								<input type="text" name="tags" class="form-control" ng-model="BCC.frm.data.tags" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required/>
-						</div>
-						<p ng-show="(!login.tags.$valid && login.tags.$touched) || BCC.frm.error['tags']" class="text-danger">{{ BCC.frm.msg.required }}</p>
-					</div>	
-
-					<div class="form-group">
-						<div class="form-line">
-								<label class="form-label">Short Description<span>*</span></label>
-								<textarea rows="4" name="short_description" class="form-control" ng-model="BCC.frm.data.short_description" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required></textarea>
-						</div>
-						<p ng-show="(!login.short_description.$valid && login.short_description.$touched) || BCC.frm.error['short_description']" class="text-danger">{{ BCC.frm.msg.required }}</p>
 					</div>
-
-					<div class="form-group">
-						<div class="form-line">
-								<label class="form-label">Description<span>*</span></label>
-								<textarea ui-tinymce="BCC.tinymceOptions" name="description" class="form-control" ng-model="BCC.frm.data.description" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" required/></textarea>
-						</div>
-						<p ng-show="(!login.description.$valid && login.description.$touched) || BCC.frm.error['description']" class="text-danger">{{ BCC.frm.msg.required }}</p>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">Tags</div>
+					<div class="panel-body">
+						<tags-input ng-model="BCC.frm.data.tags"></tags-input>
 					</div>
-
-					<p class="text-info">* fields are required</p>
-					<input type="submit" class="btn btn-primary" value="Save" ng-click="BCC.frm.data._status = 'draft'"/>
-					<input type="submit" class="btn btn-success" value="Save & Publish" ng-click="BCC.frm.data._status = 'published'"/>
-					</form>
 				</div>
 			</div>
 		</div>
+		<div class="fixed-wrapper-btns create-btns clearfix">
+			<input type="submit" class="btn btn-primary" value="Save" ng-click="BCC.frm.data._status = 'draft'" />
+			<input type="submit" class="btn btn-success" value="Save & Publish" ng-click="BCC.frm.data._status = 'published'" />
+		</div>
+	</form>
 	</div>
 </div>
+
+
 <!-- ng-disabled="login.$invalid"-->
 
-<div class="alert alert-success alert-fixed" ng-if="BCC.success"><i class="fa fa-check"></i> {{BCC.successMsg}} <a class="close" data-dismiss="alert" href="#" aria-hidden="true" ng-click="BCC.success = false">&times;</a></div>
-<div class="alert alert-danger alert-fixed" ng-if="BCC.error">:( OOPS something went wrong please try again later.<a class="close" data-dismiss="alert" href="#" aria-hidden="true" ng-click="BCC.error = false">&times;</a></div>
+<div class="alert alert-success alert-fixed" ng-if="BCC.success">
+	<i class="fa fa-check"></i> {{BCC.successMsg}}
+	<a class="close" data-dismiss="alert" href="#" aria-hidden="true" ng-click="BCC.success = false">&times;</a>
+</div>
+<div class="alert alert-danger alert-fixed" ng-if="BCC.error">:( OOPS something went wrong please try again later.
+	<a class="close" data-dismiss="alert" href="#" aria-hidden="true" ng-click="BCC.error = false">&times;</a>
+</div>
+
+
+
+<!-- <div class="form-group">
+		<div class="form-line">
+			<label class="form-label">Category
+				<span>*</span>
+			</label>
+			<select name="category" class="form-control" ng-model="BCC.frm.data.category" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)"
+			 required>
+				<option ng-repeat="(i, obj) in BCC.category" value="{{ obj.category }}">{{ obj.category }}</option>
+			</select>
+		</div>
+		<p ng-show="(!login.category.$valid && login.category.$touched) || BCC.frm.error['category']" class="text-danger">{{ BCC.frm.msg.required }}</p>
+	</div>
+
+	<div class="form-group">
+		<div class="form-line">
+			<label class="form-label">Tags
+				<span>*</span>
+			</label>
+			<input type="text" name="tags" class="form-control" ng-model="BCC.frm.data.tags" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)"
+			 required/>
+		</div>
+		<p ng-show="(!login.tags.$valid && login.tags.$touched) || BCC.frm.error['tags']" class="text-danger">{{ BCC.frm.msg.required }}</p>
+	</div> -->

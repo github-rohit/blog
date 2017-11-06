@@ -7,12 +7,7 @@ const dbSchema = new Schema({
 		required: true
 	},
 	image: {
-		type: String,
-		required: true
-	},
-	short_description: {
-		type: String,
-		required: true
+		type: String
 	},
 	description: {
 		type: String,
@@ -23,8 +18,7 @@ const dbSchema = new Schema({
 		required: true
 	},
 	tags: {
-		type: String,
-		required: true
+		type: Array
 	},
 	created_by: {
 		type: mongoose.Schema.ObjectId,

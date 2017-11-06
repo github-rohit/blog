@@ -7,7 +7,7 @@
 
 <div class="container">
 	<div class="profile-container">
-		<form class="angular-form" ng-submit="PUC.submit()">
+		<form class="angular-form-basic" ng-submit="PUC.submit()">
 		<h2 class="user-name">{{PUC.formData.name}}</h2>
 		<p>{{PUC.formData.email}}</p>
 		<div class="aboutme clearfix">
@@ -20,17 +20,20 @@
 			</div>
 			<div>
 				<h3>ABOUT ME</h3>
-				<p><textarea rows="4" class="form-control" name="aboutme" ng-model="PUC.formData.aboutme" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)"></textarea></p>
-				<p><input type="text" class="form-control" placeholder="Website" name="website" ng-model="PUC.formData.website" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)"/></p>
+				<p><textarea expanding-textarea rows="4" class="form-control" name="aboutme" ng-model="PUC.formData.aboutme" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)"></textarea></p>
+				<p class="input-group"><span class="input-group-addon" title="Website"><i class="fa fa-wpforms"></i></span><input type="text" class="form-control" placeholder="Website" name="website" ng-model="PUC.formData.website"/></span></p>
 				<div class="row">
 					<div class="col-md-6">
-						<select class="form-control" name="gender" ng-model="PUC.formData.gender" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)">
+						<p class="input-group"><span class="input-group-addon" title="Gender"><i class="fa fa-circle-thin"></i></span><select class="form-control" name="gender" ng-model="PUC.formData.gender">
 							<option value="male">Male</option>
 							<option value="female">Female</option>
 							<option value="other">Other</option>
 						</select>
+						</p>
 					</div>
-					<div class="col-md-6"><input type="text" class="form-control" placeholder="Country" name="country" ng-model="PUC.formData.country" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)"/></div>
+					<div class="col-md-6">
+						<p class="input-group"><span class="input-group-addon" title="Country"><i class="fa fa-map-marker"></i></span><input type="text" class="form-control" placeholder="Country" name="country" ng-model="PUC.formData.country"/></p>
+					</div>
 				</div>
 
 				<div class="social-media">
@@ -51,8 +54,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="text-center">
-			<p></p>
+		<div class="fixed-wrapper-btns clearfix">
 			<input type="submit" class="btn btn-success" value="Update"/>
 		</div>
 		</form>

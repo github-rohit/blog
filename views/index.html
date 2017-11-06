@@ -9,11 +9,12 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.2.0/ng-tags-input.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">  
 <link rel="stylesheet" type="text/css" href="/assets/css/main.css">  
 <script src="//www.google.com/recaptcha/api.js"></script>
 </head>
-<body class="ng-cloak">
+<body class="ng-cloak" ng-class="bodyClass">
 	<header ng-controller="NavController as NAV" class="navbar-default">
 		<nav-directive></nav-directive>
 	</header>
@@ -48,6 +49,8 @@
 <script src="/assets/app/routes/routes.js"></script>
 <script src="/assets/app/run/run.js"></script>
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.2.0/ng-tags-input.min.js"></script>
+
 <script src="/assets/app/filters/filter.js"></script>
 
 <script src="/assets/app/services/formerror.service.js"></script>
@@ -57,6 +60,7 @@
 <script src="/assets/app/services/user.update.service.js"></script>
 <script src="/assets/app/services/pagination.service.js"></script>
 <!--Directive-->
+<script src="/assets/app/directives/directive.js"></script>
 <script src="/assets/app/directives/loader/loader.directive.js"></script>
 <script src="/assets/app/directives/nav/nav.directive.js"></script>
 <script src="/assets/app/directives/list/list.directive.js"></script>

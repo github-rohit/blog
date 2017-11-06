@@ -17,4 +17,14 @@
         }    
     });    
 
+    app.module.filter('getShortDescription', function () { 
+        return function (str, len) {
+            len = len || 350;
+            var elem = angular.element("<div>"+ str +"</div>");
+            var txt = elem.text();
+
+            return txt.substr(0, len) + "...";
+        }    
+    });   
+    
 })(app);

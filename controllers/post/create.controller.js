@@ -52,11 +52,8 @@ module.exports =  function(app) {
 			req.checkBody('title', 'required').notEmpty();
 		}
 		
-		req.checkBody('short_description', 'required').notEmpty();
-		req.checkBody('image', 'required').notEmpty();
 		req.checkBody('description', 'required').notEmpty();
 		req.checkBody('category', 'required').notEmpty();
-		req.checkBody('tags', 'required').notEmpty();
 		req.checkBody('owner', 'required').notEmpty();
 		req.checkBody('date', 'required').notEmpty();
 
@@ -89,7 +86,6 @@ module.exports =  function(app) {
 				postObj.post_reference_id = POST_ID || null;
 
 				Posts.savePost(postObj).then( post => {
-
 					res.send({
 						success: true,
 						message: 'Success',
@@ -111,7 +107,7 @@ module.exports =  function(app) {
 				};
 
 				if (data.post_reference_id && NEW_STATUS === STATUS_PUB) {
-					Post.update({
+					Posts.update({
 						_id: data.post_reference_id
 					}, {
 						status: Config.postStatus.deleted
@@ -151,26 +147,9 @@ module.exports =  function(app) {
 	}
 
 	function publish (req, res, next) {
-		const data = req.body;
-
-		Posts.updatePost({
-			_id: data._id
-		}, {
-			status: Config.postStatus.published
-		}).then(() => {
-
-			res.send({
-				success: true,
-				message: 'Success'
-			});
-
-		}).catch( err => {
-			console.error("publish post: ", err);
-
-			res.send({
-				error: true,
-				message: err.errmsg
-			});					
-		});
+		res.send({
+			success: true,
+			message: 'Success'
+		});		
 	}
 };

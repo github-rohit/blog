@@ -36,7 +36,7 @@
 		this.getPosts = function (page, status) {
 			PostService.getPosts({
 				"author": this.currentUser._id,
-				"status": status || '',
+				"status": status || _this.activeTab,
 				"limit": _this.limit,
 				"page": page || 1
 			}, function (res) {
@@ -44,7 +44,7 @@
 				if (data.success) {
 					_this.posts = $scope.posts = data.list;
 					_this.pager = PagerService.SetPage(page, data.totalPosts, _this.limit);
-					_this.activeTab = status || 'all';
+					_this.activeTab = status || _this.activeTab;
 				}
 			});	
 		};

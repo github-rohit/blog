@@ -12,17 +12,17 @@ module.exports =  function(app) {
 		var resObj = {};
 		var query = {};
 
-		const id = req.body.id;
-		const status = req.body.status;
-		const category = req.body.category || '';
-		const tags = req.body.tags || '';
-		const author = req.body.author || '';
-		
-		const page = req.body.page || 1;
+		const {id, status, category = "", tags = "", author, limit = 10, page = 1} = req.body;
 		const skip = page  > 1 ? limit * ( page - 1 ) : 0;
 		
 		const aQUERY = [{
-			$limit: req.body.limit || 10
+			$sort: {
+				date: -1
+			}
+		}, {
+			$skip : skip
+		}, {
+			$limit: limit
 		}, {
 			$lookup: {
 				from: "users",
@@ -33,7 +33,6 @@ module.exports =  function(app) {
 		}, {
 			$project: {
 				"title": 1,
-				"short_description": 1,
 				"image": 1,
 				"description": 1,
 				"category": 1,
@@ -45,12 +44,6 @@ module.exports =  function(app) {
 				"post_reference_id": 1
 			}
 		}];
-
-		if (skip) {
-			aQUERY.push({
-				$skip : skip
-			});
-		}
 
 		query.status = Config.postStatus[status] || Config.postStatus.published
 
@@ -67,10 +60,10 @@ module.exports =  function(app) {
 		} 
 		
 		if (tags){
-			query.tags = tags;
+			query.tags = { $elemMatch: {text: tags} };
 		}
 		
-		aQUERY.push({
+		aQUERY.unshift({
 			$match: query
 		});
 		
