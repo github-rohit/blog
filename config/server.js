@@ -53,7 +53,8 @@ module.exports =  function(app) {
 	app.use(passport.initialize());
 	app.use(passport.session());
 	app.use(cookieParser());
-
+	
+	mongoose.Promise = global.Promise;
 	mongoose.connect(config.getDbConnectionString(), {
 		"useMongoClient": true
 	});

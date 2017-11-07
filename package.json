@@ -25,6 +25,7 @@
     "mongodb": "*",
     "mongoose": "^4.11.0",
     "multer": "*",
+    "node-schedule": "^1.2.5",
     "passport": "*",
     "passport-http": "*",
     "passport-local": "*",

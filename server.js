@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const schedule = require('node-schedule');
 const config = require('./config/config');
 const serverConfig = require('./config/server');
 const loginController = require('./controllers/login.controller');
@@ -9,6 +10,7 @@ const updateUserController = require('./controllers/update.user.controller');
 const blogCreateController = require('./controllers/post/create.controller');
 const blogReadController = require('./controllers/post/read.controller');
 const blogUpdateController = require('./controllers/post/update.controller');
+const postScheduleController = require('./controllers/post/postSchedule.controller');
 const commentReadController = require('./controllers/comment/read.controller');
 const createReadController = require('./controllers/comment/create.controller');
 const categoriesController = require('./controllers/categories.controller');
@@ -41,4 +43,8 @@ server.get('*', function (req, res, next) {
 
 server.listen(port, () => {
     console.log('SERVER UP AND RUNNING AT PORT: ' + port);
+});
+
+schedule.scheduleJob("00 00 1 * * *", () => {
+    postScheduleController(new Date());
 });
