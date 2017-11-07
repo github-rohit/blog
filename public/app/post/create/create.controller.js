@@ -157,6 +157,8 @@
 						text: val
 					});
 				});
+			} else {
+				arr = str;
 			}
 
 			return arr;
