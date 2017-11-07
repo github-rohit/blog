@@ -22,8 +22,13 @@
             len = len || 350;
             var elem = angular.element("<div>"+ str +"</div>");
             var txt = elem.text();
+            var ellipsis = "";
 
-            return txt.substr(0, len) + "...";
+            if (str.length > len) {
+                ellipsis = "...";
+            }
+
+            return txt.substr(0, len) + ellipsis;
         }    
     });   
     

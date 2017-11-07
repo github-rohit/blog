@@ -54,5 +54,7 @@ module.exports =  function(app) {
 	app.use(passport.session());
 	app.use(cookieParser());
 
-	mongoose.connect(config.getDbConnectionString());
+	mongoose.connect(config.getDbConnectionString(), {
+		"useMongoClient": true
+	});
 };

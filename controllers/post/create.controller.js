@@ -135,7 +135,8 @@ module.exports =  function(app) {
 		Posts.updatePost(query, updateObj).then( post => {
 			res.send({
 				success: true,
-				message: 'Success'
+				message: 'Success',
+				post: post
 			});
 		}).catch( err => {
 

@@ -25,6 +25,7 @@
 			theme: 'modern',
 			menubar:false,
 			branding: false,
+			content_css: ["/assets/css/bootstrap.min.css", "/assets/css/tinymce.content.css", "//fonts.googleapis.com/css?family=Merriweather|Roboto:300,400,700"],
 			plugins: [
 				'advlist autolink lists link image charmap print preview hr anchor pagebreak',
 				'searchreplace wordcount visualblocks visualchars code fullscreen',
@@ -106,7 +107,7 @@
 
 			postObj.tags = getTagArrayFormat(postObj.tags);
 
-			if (!postObj.post_reference_id) {
+			if (!postObj.post_reference_id && postObj.status !== "draft") {
 				PostService.getPosts({
 					post_reference_id: postObj._id,
 					status: "all"

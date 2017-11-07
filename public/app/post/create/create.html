@@ -14,6 +14,14 @@
 		<div class="col-right" ng-class="{'col-right-fixed': BCC.colRightFixed}">
 			<div class="panel-group">
 				<div class="panel panel-default">
+					<div class="panel-heading">Publish setting </div>
+					<div class="panel-body">
+						<input style="width: 100%" type="submit" class="btn btn-default" value="Schedule" ng-click="BCC.frm.data._status = 'schedule'" />
+						<p></p>
+						<input style="width: 100%" type="submit" class="btn btn-primary" value="Publish Immediately" ng-click="BCC.frm.data._status = 'published'" />
+					</div>
+				</div>
+				<div class="panel panel-default">
 					<div class="panel-heading">Featured image url</div>
 					<div class="panel-body">
 						<input type="text" type="text" name="image" class="form-control" ng-model="BCC.frm.data.image" placeholder="Featured Image Url" required/>
@@ -41,8 +49,7 @@
 		</div>
 		<div class="fixed-wrapper-btns create-btns clearfix">
 			<a target="_blank" ng-if="BCC.frm.data._id" href="/post/{{BCC.frm.data._id}}" class="btn btn-link pull-left"><i class="fa fa-eye"></i> Preview</a>
-			<input type="submit" class="btn btn-primary" value="Save" ng-click="BCC.frm.data._status = 'draft'" />
-			<input type="submit" class="btn btn-success" value="Save & Publish" ng-click="BCC.frm.data._status = 'published'" />
+			<input type="submit" class="btn btn-default" value="Save" ng-click="BCC.frm.data._status = 'draft'" />
 		</div>
 	</form>
 	</div>

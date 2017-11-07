@@ -1,0 +1,12 @@
+html, body {
+	font-family: 'Roboto', sans-serif;
+	box-sizing: border-box;
+	color: #3F3F3F;
+    line-height: 1.7;
+    font-size: 16px;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Merriweather', serif;
+	color: #3F3F3F;
+	line-height: 1.3;
+}

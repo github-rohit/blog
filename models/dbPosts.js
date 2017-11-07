@@ -39,7 +39,7 @@ const dbSchema = new Schema({
 
 const Posts = mongoose.model('Posts', dbSchema);
 
-Posts.collection.ensureIndex({
+Posts.collection.createIndex({
 	"title": 1, 
 	status: 1,
 	"post_reference_id": 1 
