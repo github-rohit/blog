@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
-const schedule = require('node-schedule');
 const config = require('./config/config');
 const serverConfig = require('./config/server');
 const loginController = require('./controllers/login.controller');
