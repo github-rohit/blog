@@ -37,8 +37,10 @@
 					</div>
 				</div>
 			</div>
+			
 		</div>
 		<div class="fixed-wrapper-btns create-btns clearfix">
+			<a ng-if="BCC.frm.data._id" href="/post/{{BCC.frm.data._id}}" class="btn btn-link pull-left"><i class="fa fa-eye"></i> Preview</a>
 			<input type="submit" class="btn btn-primary" value="Save" ng-click="BCC.frm.data._status = 'draft'" />
 			<input type="submit" class="btn btn-success" value="Save & Publish" ng-click="BCC.frm.data._status = 'published'" />
 		</div>
@@ -82,3 +84,23 @@
 		</div>
 		<p ng-show="(!login.tags.$valid && login.tags.$touched) || BCC.frm.error['tags']" class="text-danger">{{ BCC.frm.msg.required }}</p>
 	</div> -->
+
+	<div ng-if="BCC.isDraft">
+	<div class="modal-backdrop fade in"></div>
+	<div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: block">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h4 class="modal-title" id="myModalLabel">Saved Draft</h4>
+			</div>
+			<div class="modal-body">
+				A more recent revision of this post exists. Restore?
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-default" ng-click="BCC.isDraft = false">Don't restore</button>
+			  <button type="button" class="btn btn-primary" ng-click="BCC.resetDraftData()">Restore changes</button>
+			</div>
+		  </div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	  </div><!-- /.modal -->
+	</div>

@@ -12,7 +12,7 @@ module.exports =  function(app) {
 		var resObj = {};
 		var query = {};
 
-		const {id, status, category = "", tags = "", author, limit = 10, page = 1} = req.body;
+		const {id, status, category = "", tags = "", author, limit = 10, page = 1, post_reference_id} = req.body;
 		const skip = page  > 1 ? limit * ( page - 1 ) : 0;
 		
 		const aQUERY = [{
@@ -45,12 +45,22 @@ module.exports =  function(app) {
 			}
 		}];
 
-		query.status = Config.postStatus[status] || Config.postStatus.published
+		if (status === "all") {
+			query.status = {
+				$ne: Config.postStatus.deleted
+			}
+		} else {
+			query.status = Config.postStatus[status] || Config.postStatus.published
+		}
 
 		if (id) {
 			query._id = new ObjectId(id);
 		}
-		
+
+		if (post_reference_id) {
+			query.post_reference_id = new ObjectId(post_reference_id);
+		}
+
 		if (author) {
 			query.created_by = new ObjectId(author);
 		}
@@ -87,6 +97,7 @@ module.exports =  function(app) {
 	}  
 
 	function getPost(req, res, next) {
+		req.body.status = "all";
 		getPosts(req, res, next);
 	}
 	// Get count

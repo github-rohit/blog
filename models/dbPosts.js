@@ -41,6 +41,7 @@ const Posts = mongoose.model('Posts', dbSchema);
 
 Posts.collection.ensureIndex({
 	"title": 1, 
+	status: 1,
 	"post_reference_id": 1 
 }, { 
 	unique: true 

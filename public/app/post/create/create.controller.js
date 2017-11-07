@@ -1,9 +1,9 @@
 (function(app){
 	
 	app.module.controller('BlogCreateController', BlogCreateController);
-	BlogCreateController.$inject = ['$scope', '$rootScope', '$document', '$window', 'PostService', 'FormErrorService', 'AuthenticationService']
+	BlogCreateController.$inject = ['$scope', '$rootScope', '$document', '$window', '$location','PostService', 'FormErrorService', 'AuthenticationService']
 
-	function BlogCreateController($scope, $rootScope, $document, $window, PostService, FormErrorService, AuthenticationService) {
+	function BlogCreateController($scope, $rootScope, $document, $window, $location, PostService, FormErrorService, AuthenticationService) {
 		var _this = this;
 		var path = window.location.pathname;
 		var patharr = path.split('/');
@@ -39,9 +39,7 @@
 			if (PostService.list.length) {
 				angular.forEach(PostService.list, function(postObj) {
 					if (postObj._id === postId) {
-						postObj.tags = getTagArrayFormat(postObj.tags);
-						
-						_this.frm.data = postObj;
+						setAndModifyData(postObj);
 					}
 				});
 			} else {
@@ -50,10 +48,7 @@
 				}, function (response) {
 					var res = response.data;
 					if (res.success) {
-						var postObj = res.list[0];
-						postObj.tags = getTagArrayFormat(postObj.tags);
-
-						_this.frm.data = postObj;
+						setAndModifyData(res.list[0]);
 					} else {
 						_this.error = true;
 					}
@@ -97,6 +92,40 @@
 				}
 			});
 		};
+		
+		this.resetDraftData = function () {
+			_this.isDraft = false;
+			_this.frm.data = _this.draftData;
+		}
+
+		function setAndModifyData (postObj) {
+
+			if (!postObj) {
+				return;
+			}
+
+			postObj.tags = getTagArrayFormat(postObj.tags);
+
+			if (!postObj.post_reference_id) {
+				PostService.getPosts({
+					post_reference_id: postObj._id,
+					status: "all"
+				}, function (response) {
+					var res = response.data;
+					if (res.success) {
+						if (res.list[0]) {
+							_this.isDraft = true;
+							_this.draftData = res.list[0];
+						}
+					} else {
+						_this.error = true;
+					}
+				});				
+			}
+			
+			_this.frm.data = postObj;
+
+		}
 
 		$document.on('scroll', function() {
 			

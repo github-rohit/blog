@@ -321,7 +321,7 @@ h1, h2, h3, h4, h5, h6 {
 	border-top: 1px solid #CCC;
 	text-align: center;
 	padding: 5px 15px;
-	z-index: 10000000000;
+	z-index: 1000;
  }
  .fixed-wrapper-btns .btn {
 	min-width: 125px;

@@ -110,7 +110,8 @@ module.exports =  function(app) {
 					Posts.update({
 						_id: data.post_reference_id
 					}, {
-						status: Config.postStatus.deleted
+						status: Config.postStatus.deleted,
+						post_reference_id: data._id
 					}).then(() => {
 						update (req, res, next, query, postObj);
 					}).catch(err => {
@@ -130,6 +131,7 @@ module.exports =  function(app) {
 	}  
 
 	function update (req, res, next, query, updateObj) {
+		updateObj.post_reference_id = null;
 		Posts.updatePost(query, updateObj).then( post => {
 			res.send({
 				success: true,
