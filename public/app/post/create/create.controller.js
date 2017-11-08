@@ -37,7 +37,10 @@
 		};
 		
 		if (postId) {
-			if (PostService.list.length) {
+			if (PostService.tempList) {
+				setAndModifyData (PostService.tempList)
+				PostService.tempList = null;
+			} else if (PostService.list.length) {
 				angular.forEach(PostService.list, function(postObj) {
 					if (postObj._id === postId) {
 						setAndModifyData(postObj);
@@ -77,6 +80,7 @@
 					_this.success = true;
 
 					if (data.post) {
+						_this.frm.data.post_reference_id = data.post.post_reference_id;
 						_this.frm.data._id = data.post._id;
 						_this.frm.data.status = data.post.status;
 					}
@@ -84,6 +88,11 @@
 					if (_this.frm.data._status == 'draft') {
 						_this.successMsg = 'Post saved successfully';
 					} else {
+						if (_this.frm.data.post_reference_id) {
+							_this.frm.data._id = _this.frm.data.post_reference_id
+							_this.frm.data.post_reference_id = null;
+							_this.frm.data.status = "published";
+						}
 						_this.successMsg = 'Post published successfully';
 					}
 
@@ -96,7 +105,7 @@
 		
 		this.resetDraftData = function () {
 			_this.isDraft = false;
-			_this.frm.data = _this.draftData;
+			$location.path('/create/' +PostService.tempList._id);
 		}
 
 		function setAndModifyData (postObj) {
@@ -116,7 +125,7 @@
 					if (res.success) {
 						if (res.list[0]) {
 							_this.isDraft = true;
-							_this.draftData = res.list[0];
+							PostService.tempList = res.list[0];
 						}
 					} else {
 						_this.error = true;

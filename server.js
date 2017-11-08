@@ -45,6 +45,6 @@ server.listen(port, () => {
     console.log('SERVER UP AND RUNNING AT PORT: ' + port);
 });
 
-schedule.scheduleJob("00 00 1 * * *", () => {
-    postScheduleController(new Date());
-});
+// schedule.scheduleJob("00 00 1 * * *", () => {
+//     postScheduleController(new Date());
+// });

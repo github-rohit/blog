@@ -37,6 +37,21 @@ const dbSchema = new Schema({
 	}
 });
 
+dbSchema.statics.updatePublishAndDelete = function (postObj, delId) {
+	const ID = postObj.post_reference_id;
+
+	postObj.post_reference_id = null;
+
+	return Posts.update({
+		_id: ID
+	}, postObj).then(() => {
+		return Posts.remove({
+			_id: delId
+		});
+	});
+
+}
+
 const Posts = mongoose.model('Posts', dbSchema);
 
 Posts.collection.createIndex({
