@@ -44,7 +44,16 @@
 					_this.post = postObj;
 				}
 			});
+
+			if (!_this.post) {
+				getPostsById();
+			}
+
 		} else {
+			getPostsById();
+		}
+
+		function getPostsById () {
 			PostService.getPostsById({
 				id: postId
 			}, function (response) {

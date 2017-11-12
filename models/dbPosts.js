@@ -14,8 +14,8 @@ const dbSchema = new Schema({
 		required: true
 	},
 	category: {
-		type: String,
-		required: true
+		type: Array,
+		default: "Uncategorized"
 	},
 	tags: {
 		type: Array
@@ -34,32 +34,96 @@ const dbSchema = new Schema({
 	},
 	post_reference_id: {
 		type: mongoose.Schema.ObjectId
+	},
+	schedule_at: {
+		type: Date
 	}
 });
 
+dbSchema.statics.findAndUpdateOrSave = function (query, postObj) {
+	return new Promise((resolve, reject) => {
+		Posts.findOne(query, (err, post) => {
+			if (err) {
+
+				reject(err);
+
+			} else if (post) {
+
+				Posts.findOneAndUpdate({
+					_id: post._id
+				}, postObj, {
+					new: true
+				}, (err, result)=> {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(result);
+					}
+				});	
+
+			} else {
+
+				const newPost = Posts(postObj);
+				newPost.save((err, result)=> {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(result);
+					}
+				});
+
+			}
+		})
+	});	
+}
+
 dbSchema.statics.updatePublishAndDelete = function (postObj, delId) {
 	const ID = postObj.post_reference_id;
-
+	
 	postObj.post_reference_id = null;
-
-	return Posts.update({
-		_id: ID
-	}, postObj).then(() => {
-		return Posts.remove({
-			_id: delId
-		});
-	});
+	
+	return new Promise((resolve, reject) => {
+		let id = delId;
+		Posts.findOneAndUpdate({
+			_id: ID
+		}, {
+			$set: postObj
+		}, {
+			new: true
+		},(err, post) => {
+			if (err) {
+				reject({
+					id, 
+					code: "001#1"
+				});
+			} else {
+				Posts.remove({
+					_id: delId
+				},  (err) => {
+					if (err) {
+						reject({
+							id,
+							code: "001#2"	
+						});
+					} else {
+						resolve(post);
+					}
+				});				
+			}
+			
+		});		
+	})
 
 }
 
 const Posts = mongoose.model('Posts', dbSchema);
 
-Posts.collection.createIndex({
-	"title": 1, 
-	status: 1,
-	"post_reference_id": 1 
-}, { 
-	unique: true 
-});
+// Posts.collection.createIndex({
+// 	"title": 1, 
+// 	status: 1,
+// 	"post_reference_id": 1 
+// }, { 
+// 	unique: true 
+// });
 
 module.exports = Posts;

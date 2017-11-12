@@ -1,20 +1,22 @@
 (function(app){
 
 	app.module.controller('LoginController', LoginController);
-	LoginController.$inject = ['$scope', '$http', '$location', 'AuthenticationService', 'RegisterService'];
+	LoginController.$inject = ['$scope', '$rootScope', '$http', '$location', 'AuthenticationService', 'RegisterService'];
 
-	function LoginController($scope, $http, $location, AuthenticationService, RegisterService) {
+	function LoginController($scope, $rootScope, $http, $location, AuthenticationService, RegisterService) {
 		var _this = this;
 
 		_this.formData = {};
 		_this.formError = {};
 		_this.loginform = true;
 
-		_this.submit = function() {
+		$rootScope.navActiveTab = 'login';
+
+		this.submit = function() {
 			AuthenticationService.Login(_this.formData, function (res){
 				if (res.data.success) {
 					AuthenticationService.SetCredentials(res.data.user);
-					$location.path('/dashboard');
+					$location.path('/dashboard/published/1');
 				} else if (res.data.status) {
 					_this.authenticationFailed = false;
 					_this.loginform = false;
@@ -27,7 +29,7 @@
 			});
 		};	
 		
-		_this.resend = function () {
+		this.resend = function () {
 			
 			RegisterService.resendEmail(_this.email, function(err) {
 				_this.loginform = false;

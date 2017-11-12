@@ -1,7 +1,6 @@
 
-
 // INCLUED
-const Config = require('../config/config');
+const {USER_STATUS} = require('../config/config');
 const Users = require('../models/dbUsers');
 const ResetPassword = require('../models/dbResetPassword');
 const Ejs = require('ejs');
@@ -13,8 +12,8 @@ const Sendmail = require('sendmail')();
 const Cryptr = require('cryptr');
 
 //CONTANT VALUE
-const STATUS_PENDING = Config.status.pending;
-const STATUS_ACTIVE = Config.status.active;
+const STATUS_PENDING = USER_STATUS.PENDING;
+const STATUS_ACTIVE = USER_STATUS.ACTIVE;
 const registerverification = "registerverification";
 
 module.exports =  (app) => {

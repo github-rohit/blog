@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const ejs = require('ejs');
 const schedule = require('node-schedule');
 const config = require('./config/config');
 const serverConfig = require('./config/server');
@@ -38,13 +39,15 @@ categoriesController(server);
  
 // rewrite virtual urls to angular app to enable refreshing of internal pages
 server.get('*', function (req, res, next) {
-    res.sendFile(path.resolve('views/index.html'));
+    res.render("index", {
+        RUN_MODE: process.env.RUN_MODE
+    });
 });
 
 server.listen(port, () => {
     console.log('SERVER UP AND RUNNING AT PORT: ' + port);
 });
 
-// schedule.scheduleJob("00 00 1 * * *", () => {
-//     postScheduleController(new Date());
-// });
+schedule.scheduleJob("0 0 * * * *", () => {
+    postScheduleController(new Date());
+});

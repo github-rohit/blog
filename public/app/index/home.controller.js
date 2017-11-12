@@ -1,15 +1,17 @@
 (function(app){
 
 	app.module.controller('HomeController', HomeController);
-	HomeController.$inject = ['$scope', 'PostService', 'PagerService', "UserUpdateService"]
+	HomeController.$inject = ['$scope', '$rootScope', 'PostService', 'PagerService', "UserUpdateService"]
 
-	function HomeController($scope, PostService, PagerService, UserUpdateService ) {
-		const self = this;
+	function HomeController($scope, $rootScope, PostService, PagerService, UserUpdateService ) {
+		const _this = this;
 		const path = window.location.pathname;
 		const splitPath = path.split('/');
 		const category = splitPath[1];
 		const catType = splitPath.pop();
 		this.posts = [];
+
+		$rootScope.navActiveTab = 'home';
 		
 		$scope.posts = [];
 
@@ -24,22 +26,23 @@
 			query[category] = decodeURIComponent(catType);
 		}
 		
-		this.setPage = (obj)=> {
-			if (obj.page < 1 || obj.page > this.pager.totalItems) {
+		this.setPage = function (obj) {
+			if (obj.page < 1 || obj.page > _this.pager.totalItems) {
 				return;
 			}
-			this.getPosts(obj.page);
+
+			_this.getPosts(obj.page);
 		}
 
-		this.getPosts = (page) => {
+		this.getPosts = function (page) {
 			query.page = page || 1;
 			
 			PostService.getPosts(query, function (res) {
 				const data = res.data;
 	
 				if (data.success) {
-					self.posts = $scope.posts = data.list;
-					self.pager = PagerService.SetPage(page, data.totalPosts);
+					_this.posts = $scope.posts = data.list;
+					_this.pager = PagerService.SetPage(page, data.totalPosts);
 				}
 				
 			});

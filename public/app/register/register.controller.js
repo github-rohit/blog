@@ -1,9 +1,9 @@
 (function(app){
 
 	app.module.controller('RegisterController', RegisterController);
-		RegisterController.$inject = ['$scope', '$http', '$interval', 'FormErrorService', 'RegisterService']
+		RegisterController.$inject = ['$scope', '$rootScope', '$http', '$interval', 'FormErrorService', 'RegisterService']
 
-		function RegisterController($scope, $http, $interval, FormErrorService, RegisterService) {
+		function RegisterController($scope, $rootScope, $http, $interval, FormErrorService, RegisterService) {
 			const self = this;
 			this.formData = {
 				gender: ''
@@ -11,7 +11,9 @@
 			this.formError = {};
 			this.formValidateMsg = FormErrorService.messages;
 			this.userSuccess = false;
-			
+
+			$rootScope.navActiveTab = 'signup';
+
 			var isgrecaptchajs = $interval(function(){
 				grecaptcha.render('gre-captcha', {
 				  'sitekey' : '6LciizMUAAAAAE0nWYFK33EmsDQ_L0M7TwyHULvz'

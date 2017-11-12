@@ -1,4 +1,4 @@
-const Config = require('../../config/config');
+const {POST_STATUS} = require('../../config/config');
 const Posts = require('../../models/dbPosts');
 const Users = require('../../models/dbUsers');
 const ObjectId = require('mongoose').Types.ObjectId; 
@@ -45,13 +45,7 @@ module.exports =  function(app) {
 			}
 		}];
 
-		if (status === "all") {
-			query.status = {
-				$ne: Config.postStatus.deleted
-			}
-		} else {
-			query.status = Config.postStatus[status] || Config.postStatus.published
-		}
+		query.status = POST_STATUS[status] || POST_STATUS.PUBLISH
 
 		if (id) {
 			query._id = new ObjectId(id);

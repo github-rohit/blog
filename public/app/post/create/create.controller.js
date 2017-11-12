@@ -25,12 +25,14 @@
 			theme: 'modern',
 			menubar:false,
 			branding: false,
+			autoresize_bottom_margin: 0,
+			autoresize_min_height: 400,
 			content_css: ["/assets/css/bootstrap.min.css", "/assets/css/tinymce.content.css", "//fonts.googleapis.com/css?family=Merriweather|Roboto:300,400,700"],
 			plugins: [
 				'advlist autolink lists link image charmap print preview hr anchor pagebreak',
 				'searchreplace wordcount visualblocks visualchars code fullscreen',
 				'insertdatetime media nonbreaking save table contextmenu directionality',
-				'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc help autoresize'
+				'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc help autoresize placeholder'
 			],
 			toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent table | link image, media | forecolor backcolor', 
 			image_advtab: true
@@ -60,13 +62,31 @@
 			}
 		}
 
+		var d = new Date();
+		d.setDate(d.getDate() - 1);
+
+		this.mintime = d.getTime();
+		
+		/*
+		ACTIONS
+		*/
+
+		this.resetDraftData = function () {
+			_this.isDraft = false;
+			$location.path('/create/' +PostService.tempList._id);
+		}
+		
 		this.submit = function () {
 			_this.frm.data.owner = _this.currentUser._id;
 			_this.frm.data.date = new Date();
 
+			if (_this.frm.data.schedule_at) {
+				_this.frm.data.schedule_at = new Date(_this.frm.data.schedule_at);
+			}
+
 			PostService.create(_this.frm.data, function (res) {
 				var data = res.data || {};
-
+				var action = _this.frm.data._action;
 				_this.success = false;
 				_this.error = false;
 				_this.successMsg = ""
@@ -76,7 +96,6 @@
 				} else if (data.errors) {
 					_this.frm.error = FormErrorService.show(data.errors);
 				} else if (data.success) {
-					
 					_this.success = true;
 
 					if (data.post) {
@@ -85,28 +104,24 @@
 						_this.frm.data.status = data.post.status;
 					}
 
-					if (_this.frm.data._status == 'draft') {
+					if (action == 'DRAFT') {
 						_this.successMsg = 'Post saved successfully';
-					} else {
-						if (_this.frm.data.post_reference_id) {
-							_this.frm.data._id = _this.frm.data.post_reference_id
-							_this.frm.data.post_reference_id = null;
-							_this.frm.data.status = "published";
-						}
+					} else if (action == 'PUBLISH') {
 						_this.successMsg = 'Post published successfully';
+						_this.frm.data.status = "PUBLISHED";
+						_this.frm.data._id = _this.frm.data.post_reference_id || _this.frm.data._id;
+						$location.path("/post/" + _this.frm.data._id).replace();
+					} else if (action == 'SCHEDULE') {
+						_this.successMsg = 'Post scheduled on';
 					}
 
-					if (!postId) {
-						_this.frm.data = {};
-					}
 				}
 			});
 		};
-		
-		this.resetDraftData = function () {
-			_this.isDraft = false;
-			$location.path('/create/' +PostService.tempList._id);
-		}
+
+		/*
+		* FUNCTIONS
+		*/
 
 		function setAndModifyData (postObj) {
 
@@ -116,10 +131,10 @@
 
 			postObj.tags = getTagArrayFormat(postObj.tags);
 
-			if (!postObj.post_reference_id && postObj.status !== "draft") {
+			if (!postObj.post_reference_id && postObj.status !== "DRAFT") {
 				PostService.getPosts({
 					post_reference_id: postObj._id,
-					status: "all"
+					status: "DRAFT"
 				}, function (response) {
 					var res = response.data;
 					if (res.success) {
@@ -135,6 +150,23 @@
 			
 			_this.frm.data = postObj;
 
+		}
+
+		function getTagArrayFormat (str) {
+			var arr = [];
+
+			if (str && typeof str === "string") {
+				
+				str.split(',').forEach(function(val) {
+					arr.push({
+						text: val
+					});
+				});
+			} else {
+				arr = str;
+			}
+
+			return arr;
 		}
 
 		$document.on('scroll', function() {
@@ -156,23 +188,6 @@
 				$scope.pixelsScrolled = $window.scrollY;
 			})
 		});
-
-		function getTagArrayFormat (str) {
-			var arr = [];
-
-			if (str && typeof str === "string") {
-				
-				str.split(',').forEach(function(val) {
-					arr.push({
-						text: val
-					});
-				});
-			} else {
-				arr = str;
-			}
-
-			return arr;
-		}
 
 	}
 

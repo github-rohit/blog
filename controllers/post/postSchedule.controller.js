@@ -1,59 +1,72 @@
-const Config = require('../../config/config');
-const PostSchedule = require('../../models/dbPostSchedule');
+const {POST_STATUS} = require('../../config/config');
 const ScheduleTaskStatus = require('../../models/dbScheduleTaskStatus');
 const Posts = require('../../models/dbPosts');
 
+const STATUS_PUB = POST_STATUS.PUBLISH;
+
 module.exports =  function(schedule_at) {
     var idsArray = [];
+	var pArray = [];
 
-    PostSchedule.find({
+	saveScheduleTaskStatus({
+		date: schedule_at,
+		task: "001",
+		status: "SUCCESS",
+		msg: "Start Schedule publishing"
+	});
+	
+    Posts.find({
         schedule_at: {
             $lte: new Date(schedule_at)
         }       
     }).then((posts) => {
-        if (!posts.length) {
+        
+        if (!posts) {
             return;
         }
-        
-        idsArray = [];
-
-        for (const post of posts) {
-            idsArray.push(post._id);
-        }
-
-        return Posts.updateMany({
-            _id: {
-                $in: idsArray
-            }
-        }, {
-            status: Config.postStatus.published
-        });
-
-    }).then((post) => {
-        console.log("Post Schedule Published Done!");
-
-        return PostSchedule.remove({
-            _id: {
-                $in: idsArray
-            }
-        });
+		
+		console.log("IDs FOUND FOR PUBLISH:", idsArray);
+		
+		return new Promise((resolve, reject) => {
+			posts.forEach( post => {
+				let postId = post._id;
+				
+				pArray.push(Posts.updatePublishAndDelete({
+					image: post.image,
+					description: post.description,
+					category: post.category,
+					tags: post.tags,
+					status: STATUS_PUB
+				}, postId));
+				
+			});
+			
+			resolve();
+		})
 
     }).then(() => {
-        saveScheduleTaskStatus({
-            date: schedule_at,
-            task: "Published",
-            status: "SUCCESS"
-        });
-        console.log("Post Schedule Published Done!");
-    }).catch(err => {
+		for (let priomise of pArray) {
+			
+			priomise.then((id) => {
+				
+			}).catch((err) => {
+				saveScheduleTaskStatus({
+					date: schedule_at,
+					task: err.code,
+					status: "FAIL",
+					msg: err.id
+				});
+			});
+		}				
+	}).catch(err => {
 
         console.log("Post Schedule Failed", err);
 
         saveScheduleTaskStatus({
             date: schedule_at,
-            task: "Published",
+            task: "001",
             status: "FAIL",
-            error: err
+            msg: err
         });
 
     });
@@ -63,7 +76,7 @@ module.exports =  function(schedule_at) {
 function saveScheduleTaskStatus (data) {
     const scheduleTaskStatusData = new ScheduleTaskStatus(data);
     scheduleTaskStatusData.save().then(()=>{
-        console.log("schedule Task Status Done!");
+		
     }).catch(err => {
         console.log("schedule Task Status Failed", err);
     })

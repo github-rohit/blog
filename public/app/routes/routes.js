@@ -25,6 +25,11 @@
             controller: 'HomeController',
 			controllerAs: 'HC',
         })
+        .when('/search', {
+            templateUrl: '/assets/app/search/search.html',
+            controller: 'SearchController',
+			controllerAs: 'SearchC',
+        })
         .when('/post/:id', {
             templateUrl: '/assets/app/post/read/read.html',
             controller: 'BlogReadController',
@@ -35,6 +40,21 @@
             controller: 'BlogCreateController',
 			controllerAs: 'BCC',
             access: {
+                restricted: true
+            }
+        })/*.when('/dashboard', {
+            templateUrl: '/assets/app/dashboard/dashboard.html',
+            controller: 'DashController',
+			controllerAs: 'DC',
+            access: {
+                restricted: true
+            }
+        })*/.when('/dashboard/:type/:pageNum', {
+            templateUrl: '/assets/app/dashboard/dashboard.html',
+            controller: 'DashController',
+			controllerAs: 'DC',
+            access: {
+                routeType: "dashboard",
                 restricted: true
             }
         }).otherwise({ redirectTo: '/' });

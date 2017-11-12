@@ -1,0 +1,33 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="/">
+<title>Blog | MEAN</title>
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon.png">
+<% include includes/styles %>
+</head>
+<body class="ng-cloak" ng-class="bodyClass">
+	<header ng-controller="NavController as NAV" class="navbar-default">
+		<nav-directive></nav-directive>
+	</header>
+	<div ng-view class="ng-cloak"></div>
+<footer>
+    <div class="footer"></div>
+</footer>
+<route-loader>
+	<div style="display: table; width: 100%; height: 100%; position: fixed; top: 0; bottom: 0; right: 0; left: 0; background: #F1F3F6; text-align: center; z-index: 1000000000000000">
+		<div style="display: table-cell; width: 100%; height: 100%; vertical-align: middle;">
+			<img src="/assets/img/loader.svg" style="height: 100px; margin-top: -100px"/><br>
+			Loading...
+		</div>
+	</div>
+</route-loader>
+</body> 
+<%- include("includes/scripts", {
+	RUN_MODE: RUN_MODE
+}) %>
+</html>
+<% include includes/templates %>

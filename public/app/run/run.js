@@ -32,23 +32,48 @@
 
 		$rootScope.globals = blogLogin ? JSON.parse(blogLogin) : {};
 
-
-
 		if ($rootScope.globals.currentUser) {
 			AuthenticationService.isLogin = true;
 		}
 		
 		$rootScope.$on('$routeChangeStart', function(event, next, current) {
 			$rootScope.bodyClass = "";
+			$rootScope.navActiveTab = "";
 			routeChangeStart(event, next, current);
 		});
 
 		function routeChangeStart(event, next, current) {
-			if (next.access && next.access.restricted && !AuthenticationService.isLogin) {
+
+			var access = next.access || {};
+
+			if (access.routeType && !isValidRoute(next)) {
+				$location.path('/');
+			}
+
+			if (!angular.equals({}, access) && access.restricted && !AuthenticationService.isLogin) {
 				$location.path('/');
 				$route.reload();
+			} else if (!angular.equals({}, access) && !access.restricted && AuthenticationService.isLogin) {
+				$location.path('/dashboard/published/1');
+			}
+		}
+  	}
+
+	function isValidRoute (routeObj) {
+		var isroute = false;
+		var routeType = routeObj.access.routeType;
+		var params = routeObj.params || {};
+
+		if ( routeType === "dashboard") {
+			if ((params.type && params.pageNum) &&
+				(params.type === "published" || params.type === "draft") && !isNaN(params.pageNum)) {
+					
+				isroute = true
 			}
 		}
 
-  }
+		return isroute;
+	}
+
+
 })(app);

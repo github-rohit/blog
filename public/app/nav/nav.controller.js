@@ -1,9 +1,9 @@
 (function(app){
 
 	app.module.controller('NavController', NavController);
-	NavController.$inject = ['$scope', '$location', 'AuthenticationService']
+	NavController.$inject = ['$scope', '$rootScope', '$location', 'AuthenticationService']
 
-	function NavController($scope, $location, AuthenticationService) {	
+	function NavController($scope, $rootScope, $location, AuthenticationService) {	
 		var _this = this;
 		this.Authentication = AuthenticationService.isLogin;
 		this.user = {};
@@ -11,19 +11,17 @@
 
 		$scope.$watch(function() {
 			return AuthenticationService.isLogin;
-		}, () => {
-			this.Authentication = AuthenticationService.isLogin;
-			if (this.Authentication) {
-				this.currentUser = AuthenticationService.GetUser();
+		}, function () {
+			_this.Authentication = AuthenticationService.isLogin;
+			if (_this.Authentication) {
+				_this.currentUser = AuthenticationService.GetUser();
 			}
 		}, false);
 
-		this.getClass = function (url) {
-			const path = $location.path();
+		$rootScope.$watch('navActiveTab', function (newval) {
+			_this.navActiveTab = newval;
+		});
 
-			return path === url ? 'active' : '';
-		}
-		
 		this.toggle = function () {
 			_this.displayNav = !_this.displayNav;
 		}

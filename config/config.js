@@ -13,13 +13,13 @@ module.exports = {
     getDbConnectionString: function(){	
 		return process.env.MONGODB_URI;
     },
-	"status": {
-		"pending": "pending",
-		"active": "active"
+	"USER_STATUS": {
+		"PENDING": "PENDING",
+		"ACTIVE": "ACTIVE"
 	},
-	"postStatus": {
-		"published": "published",
-		"draft": "draft",
-		"deleted": "deleted"
+	"POST_STATUS": {
+		"DRAFT": "DRAFT",
+		"SCHEDULE": "DRAFT",
+		"PUBLISH": "PUBLISHED"
 	}	
 }

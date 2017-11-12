@@ -1,4 +1,4 @@
-const config = require('../config/config');
+const {USER_STATUS} = require('../config/config');
 const Users = require('../models/dbUsers');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
@@ -75,9 +75,9 @@ module.exports =  function(app) {
 					return res.sendStatus(500);
 				} 
 				
-				if (user.status == config.status.pending) {
+				if (user.status == USER_STATUS.PENDING) {
 					return res.send({
-						status: config.status.pending,
+						status: USER_STATUS.PENDING,
 						email: user.email
 					});
 				} 

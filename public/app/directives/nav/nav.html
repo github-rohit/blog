@@ -10,12 +10,12 @@
 	</div>
 	<nav class="navbar" ng-class="{in: NAV.displayNav}" ng-click="NAV.displayNav = false">
 		<ul class="nav navbar-nav">
-			<li ng-class="NAV.getClass('/')"><a href="/">HOME</a></li>
-			<li ng-class="NAV.getClass('/dashboard')" ng-if="NAV.Authentication"><a href="/dashboard">MY POSTS</a></li>
+			<li ng-class="{active: NAV.navActiveTab === 'home'}"><a href="/">HOME</a></li>
+			<li ng-class="{active: NAV.navActiveTab === 'dashboard'}" ng-if="NAV.Authentication"><a href="/dashboard/published/1">MY POSTS</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right" ng-if="!NAV.Authentication">
-			<li ng-class="NAV.getClass('/user/login')"><a href="user/login">LOGIN</a></li>
-			<li ng-class="NAV.getClass('/user/register')"><a href="user/register">SIGN UP</a></li>
+			<li ng-class="{active: NAV.navActiveTab === 'login'}"><a href="user/login">LOGIN</a></li>
+			<li ng-class="{active: NAV.navActiveTab === 'signup'}"><a href="user/register">SIGN UP</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right" ng-if="NAV.Authentication">
 			<li ng-class="{show: NAV.showDropDown}">

@@ -1,8 +1,8 @@
 <div class="container">
 	<div class="nav">
 		<ul class="nav ui-tabs">
-			<li><a href="javascript:void(0)" ng-click="DC.getPosts(1, 'published')" ng-class="{active: DC.activeTab === 'published'}">PUBLISHED</a></li>
-			<li><a href="javascript:void(0)" ng-click="DC.getPosts(1, 'draft')"ng-class="{active: DC.activeTab === 'draft'}">DRAFT</a></li>
+			<li><a href="/dashboard/published/1" ng-class="{active: DC.activeTab === 'PUBLISHED'}">PUBLISHED</a></li>
+			<li><a href="/dashboard/draft/1" ng-class="{active: DC.activeTab === 'DRAFT'}">DRAFT</a></li>
 		</ul>
 	</div>
 	<post-list posts="DC.posts" owner="true" publish="DC.publish({id: id, index: index})"></post-list>

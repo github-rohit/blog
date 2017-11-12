@@ -1,10 +1,14 @@
-const Config = require('../../config/config');
+const {POST_STATUS} = require('../../config/config');
 const Posts = require('../../models/dbPosts');
 const Categories = require('../../models/dbCategories');
 const passport = require('passport');
 
-const STATUS_DRAFT = Config.postStatus.draft;
-const STATUS_PUB = Config.postStatus.published;
+const ACTION_TYPE = {
+	"NEW": "NEW",
+	"DRAFT": "DRAFT",
+	"PUBLISH": "PUBLISH",
+	"SCHEDULE": "SCHEDULE"
+}
 
 module.exports =  function(app) {
 
@@ -29,7 +33,6 @@ function validateData (req) {
 		}
 		
 		req.checkBody('description', 'required').notEmpty();
-		req.checkBody('category', 'required').notEmpty();
 		req.checkBody('owner', 'required').notEmpty();
 		req.checkBody('date', 'required').notEmpty();
 		
@@ -49,8 +52,20 @@ function create (req, res, next) {
 	
 	validateData(req).then(() => {
 		const POST_ID = data._id;
-		const SAVED_STATUS = Config.postStatus[data.status];
-		const NEW_STATUS = Config.postStatus[data._status];
+		const SAVED_STATUS = data.status;
+		const ACTION = data._action;
+		const NEW_STATUS = POST_STATUS[ACTION];
+
+		var actionType = "";
+
+		if (!POST_ID || 
+			(SAVED_STATUS == POST_STATUS.PUBLISH && (ACTION === ACTION_TYPE.DRAFT || ACTION === ACTION_TYPE.SCHEDULE))) {
+
+			actionType = ACTION_TYPE.NEW;
+
+		} else if (SAVED_STATUS === POST_STATUS.DRAFT && ACTION === ACTION_TYPE.PUBLISH && data.post_reference_id) {
+			actionType = ACTION_TYPE.PUBLISH;
+		} 
 
 		var postObj = {
 			image: data.image,
@@ -59,39 +74,59 @@ function create (req, res, next) {
 			tags: data.tags,
 			created_by: data.owner,
 			date: data.date,
-			status: NEW_STATUS
+			status: NEW_STATUS,
+			schedule_at: data.schedule_at
 		};
 
-		if (!POST_ID || (SAVED_STATUS === STATUS_PUB && NEW_STATUS === STATUS_DRAFT)) {	
-			postObj.title = data.title;
-			postObj.post_reference_id = POST_ID || null;
+		switch (actionType) {
 
-			const newPost = Posts(postObj);
+			case ACTION_TYPE.NEW:
+				postObj.title = data.title;
+				postObj.post_reference_id = POST_ID || null;
 
-			console.log("NEW POST CREATED!")
+				console.log("NEW POST CREATED!")
 
-			return newPost.save();
+				if (!POST_ID) {
+					const newPost = Posts(postObj);
+					return newPost.save();
+				} else {
+					return Posts.findAndUpdateOrSave({
+						post_reference_id: POST_ID
+					}, postObj);
+				}
 
-		} else if (data.post_reference_id && NEW_STATUS === STATUS_PUB) {
-			postObj.post_reference_id = data.post_reference_id;
-
-			console.log("UPDATE!")
+				break;
+			case ACTION_TYPE.PUBLISH:
 			
-			return Posts.updatePublishAndDelete(postObj, POST_ID);
-		} else { 
-			console.log("UPDATE ONLY!")
-			return Posts.update({
-				_id: data._id
-			}, postObj);			
-		}
-	}).then( post => {
+				console.log("UPDATE AND DELETE!");
 
+				postObj.post_reference_id = data.post_reference_id;
+				
+				return Posts.updatePublishAndDelete(postObj, POST_ID);		
+						
+				break;	
+			default:
+				console.log("UPDATE ONLY!");
+
+				return Posts.findOneAndUpdate({
+					_id: data._id
+				}, {
+					$set: postObj
+				}, {
+					new: true
+				});	
+
+				break;
+		}
+
+	}).then( post => {
+		
 		var resObj = {
 			success: true,
 			message: 'Success'
 		};
 
-		if (post._id) {
+		if (post && post._id) {
 			resObj.post = post;
 		}
 		
@@ -99,7 +134,7 @@ function create (req, res, next) {
 
 	}).catch(err => {
 
-		console.log("POST CREATE OR UPDATE ERR");
+		console.log("POST CREATE OR UPDATE ERR " + new Date(), err);
 
 		res.send({
 			errors: err

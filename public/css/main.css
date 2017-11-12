@@ -47,7 +47,7 @@ h1, h2, h3, h4, h5, h6 {
 	position: fixed;
 	right: 260px;
 	top: 30px;
-	font-size: 16px;
+	font-size: 14px;
 	text-align: center;
 	z-index: 100;	
 	-webkit-transition: all;
@@ -56,9 +56,16 @@ h1, h2, h3, h4, h5, h6 {
 	-webkit-transition-duration: 200ms;
 	transition-duration: 200ms;
 	margin: 0;
+	padding: 9px 20px;
+	background: #6cb668;
+	color: #FFF;
+}
+.alert-fixed .fa {
+	margin-right: 5px;
 }
 .alert-fixed .close {
 	margin-left: 15px;
+	color: #FFF;
 }
 .navbar {
 	margin: 0;
@@ -100,7 +107,7 @@ h1, h2, h3, h4, h5, h6 {
 .navbar-default .navbar-nav > li.active > a:focus {
 	color: #FFF;
 	background: #598ec4;
-	background: rgba(255, 255, 255, .2);
+	background: rgba(0, 0, 0, .1);
 }
 .navbar-default .navbar-nav > li > .dropdown-menu {
 	/* margin-top: 8px; */
@@ -822,6 +829,11 @@ h1, h2, h3, h4, h5, h6 {
 .mce-ico {
 	opacity: .54;
 }
+.mce-btn.mce-active button,
+.mce-btn.mce-active button i{
+	color: #3f3f3f !important;
+	opacity: 1;
+}
 .mce-edit-area.mce-container,
 .mce-btn {
 	border: 0 !important;
@@ -837,6 +849,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 .mce-container.mce-toolbar-grp > .mce-container-body.mce-stack-layout{
 	min-width: 800px;
+}
+.mce-edit-area {
+	cursor: text;
 }
 /* 
  */
@@ -859,4 +874,12 @@ tags-input .tags .tag-item {
 tags-input .tags .tag-item .remove-button {
 	color: #CCC;
 	text-decoration: none;
+}
+
+.mce-tinymce,
+.mce-tinymce * {
+	box-shadow: none !important;
+}
+.mce-top-part::before {
+	display: none;
 }

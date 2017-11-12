@@ -13,23 +13,38 @@
         .when('/user/login', {
             templateUrl: '/assets/app/login/login.html',
             controller: 'LoginController',
-            controllerAs: 'LC'
+            controllerAs: 'LC',
+            access: {
+                restricted: false
+            }
         }).when('/user/register', {
             templateUrl: '/assets/app/register/register.html',
             controller: 'RegisterController',
-            controllerAs: 'RC'
+            controllerAs: 'RC',
+            access: {
+                restricted: false
+            }
         }).when('/user/registerverification/:id', {
             templateUrl: '/assets/app/register/emailVerification.html',
             controller: 'EmailVerification',
-            controllerAs: 'EmailV'
+            controllerAs: 'EmailV',
+            access: {
+                restricted: false
+            }
         }).when('/user/forgotpassword', {
             templateUrl: '/assets/app/register/forgotpassword.html',
             controller: 'ForgotPassword',
-            controllerAs: 'FP'
+            controllerAs: 'FP',
+            access: {
+                restricted: false
+            }
         }).when('/user/resetpassword/:id', {
             templateUrl: '/assets/app/register/resetpassword.html',
             controller: 'ResetPassword',
-            controllerAs: 'RP'
+            controllerAs: 'RP',
+            access: {
+                restricted: false
+            }
         }).when('/user/logout', {
             templateUrl: '/assets/app/logout/logout.html',
             controller: 'LogoutController',
@@ -45,13 +60,6 @@
             templateUrl: '/assets/app/profile/update/update.html',
             controller: 'ProfileUpdateController',
 			controllerAs: 'PUC',
-            access: {
-                restricted: true
-            }
-        }).when('/dashboard', {
-            templateUrl: '/assets/app/dashboard/dashboard.html',
-            controller: 'DashController',
-			controllerAs: 'DC',
             access: {
                 restricted: true
             }
