@@ -11,7 +11,7 @@
 	<nav class="navbar" ng-class="{in: NAV.displayNav}" ng-click="NAV.displayNav = false">
 		<ul class="nav navbar-nav">
 			<li ng-class="{active: NAV.navActiveTab === 'home'}"><a href="/">HOME</a></li>
-			<li ng-class="{active: NAV.navActiveTab === 'dashboard'}" ng-if="NAV.Authentication"><a href="/dashboard/published/1">MY POSTS</a></li>
+			<li ng-class="{active: NAV.navActiveTab === 'dashboard'}" ng-if="NAV.Authentication"><a href="/dashboard/published">MY POSTS</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right" ng-if="!NAV.Authentication">
 			<li ng-class="{active: NAV.navActiveTab === 'login'}"><a href="user/login">LOGIN</a></li>

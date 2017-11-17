@@ -212,6 +212,26 @@ h1, h2, h3, h4, h5, h6 {
 	right: 15px;
 	bottom: -22px;
 }
+.home-page-header-top{
+	cursor: text;
+}
+.home-page-header-top .page-top-search {
+	overflow: hidden;
+	margin-top: -5px;
+	margin-bottom: -10px;
+}
+.home-page-header-top .btn {
+	border-color: transparent;
+}
+.home-page-header-top .page-top-search input {
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 0;
+    outline: none;
+    font-size: 24px;
+    font-weight: lighter;
+	width: 100%;
+}
 
 /*CARD*/
 
@@ -378,9 +398,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 .ui-list li h2.post-title {
 	margin-top: 0;
-	margin-right: 64px;
 	color: #3F3F3F;
 	text-decoration: none;
+	font-size: 1.7em;
+	line-height: 1.45;
 }
 .ui-list li h2.post-title a {
 	color: #3F3F3F;

@@ -40,6 +40,21 @@
 					callback(response);
 				});
 			},
+			getSearchQueryResults: function (qobj, callback) {
+				var queryStr = "";
+				angular.forEach(qobj, function(value, key) {
+					if (queryStr) {
+						queryStr += "&";
+					}
+					queryStr += key + '=' + value;
+				});
+
+				$http.get('/api/post/search?' + queryStr).then(function(response){
+					callback(response);
+				}, function(response){
+					callback(response);
+				});
+			},
 			getPostsById: function (data, callback) {
 				$http.post('/api/post/posts/id', data).then(function(response){
 					callback(response);

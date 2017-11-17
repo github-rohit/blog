@@ -1,58 +1,57 @@
 (function(app){
 
 	app.module.controller('SearchController', SearchController);
-	SearchController.$inject = ['$scope', '$location' ,'PostService', 'PagerService', "UserUpdateService"]
+	SearchController.$inject = ['$scope', '$rootScope', '$location' ,'PostService', 'PagerService', "UserUpdateService"]
 
-	function SearchController($scope, $location, PostService, PagerService, UserUpdateService ) {
+	function SearchController($scope, $rootScope, $location, PostService, PagerService, UserUpdateService ) {
+		var _this = this;
 		var queryObj = $location.search();
+		var page = 0;
 
-		if (angular.equals({}, queryObj)) {
+		if (angular.equals({}, queryObj) || !queryObj.query) {
 			$location.path("/");
+		} else {
+			this.searchQuery = queryObj.query;
+			page = queryObj.page
 		}
-//, "$routeParams"
-		//console.log($location)
 
-		// const self = this;
-		// const path = window.location.pathname;
-		// const splitPath = path.split('/');
-		// const category = splitPath[1];
-		// const catType = splitPath.pop();
-		// this.posts = [];
+		if (page && !isNaN(page)) {
+			queryObj.page = parseInt(page);
+		} else {
+			queryObj.page = 1
+		}
+
+		this.posts = [];
+		this.category = PostService.category;
+
+		$rootScope.navActiveTab = 'home';
 		
-		// $scope.posts = [];
+		$scope.posts = [];
 
-		// $scope.$watch('posts', function(){
-		// 	PostService.list = $scope.posts;
-		// });
-
-		// var query = {};
-		// if (category == "author") {
-		// 	query[category] = decodeURIComponent(catType.split("-").pop());
-		// } else if (catType) {
-		// 	query[category] = decodeURIComponent(catType);
-		// }
+		$scope.$watch('posts', function(){
+			PostService.list = $scope.posts;
+		});
 		
-		// this.setPage = (obj)=> {
-		// 	if (obj.page < 1 || obj.page > this.pager.totalItems) {
-		// 		return;
-		// 	}
-		// 	this.getPosts(obj.page);
-		// }
+		this.setPage = function (obj) {
+			if (obj.page < 1 || obj.page > _this.pager.totalItems) {
+				return;
+			}
 
-		// this.getPosts = (page) => {
-		// 	query.page = page || 1;
+			$location.search({
+				query: this.searchQuery,
+				page: obj.page
+			});
+		}
+
+		PostService.getSearchQueryResults(queryObj, function (res) {
+			const data = res.data;
+
+			if (data.success) {
+				_this.posts = $scope.posts = data.list;
+				_this.pager = PagerService.SetPage(queryObj.page, data.totalPosts);
+			}
 			
-		// 	PostService.getPosts(query, function (res) {
-		// 		const data = res.data;
-	
-		// 		if (data.success) {
-		// 			self.posts = $scope.posts = data.list;
-		// 			self.pager = PagerService.SetPage(page, data.totalPosts);
-		// 		}
-				
-		// 	});
-		// }
+		});
 
-		// this.getPosts(1);
 	}
 })(app);

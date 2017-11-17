@@ -3,10 +3,11 @@ const Posts = require('../../models/dbPosts');
 const Users = require('../../models/dbUsers');
 const ObjectId = require('mongoose').Types.ObjectId; 
 
-module.exports =  function(app) {
+module.exports =  (app) => {
 
 	app.post('/api/post/posts', getPosts);
 	app.post('/api/post/posts/id', getPost);
+	app.get('/api/post/search', getPost);
 	
   	function getPosts (req, res, next) {
 		var resObj = {};
@@ -70,6 +71,38 @@ module.exports =  function(app) {
 		aQUERY.unshift({
 			$match: query
 		});
+		
+		if (Object.keys(req.query).length) {
+			query = {
+				$and: [query, {
+					$or: [{
+						title: {
+							$regex: req.query.query,
+							$options: "i"
+						}
+					}, {
+						description: {
+							$regex: req.query.query,
+							$options: "i"
+						}
+					}, {
+						category: {
+							$regex: req.query.query,
+							$options: "i"
+						}
+					}, {
+						tags: {
+							$regex: req.query.query,
+							$options: "i"
+						}
+					}]						
+				}]
+			};
+
+			aQUERY.unshift({
+				$match: query
+			});
+		}
 		
 		Posts.aggregate(aQUERY, (err, data) => {
 			if (err) {

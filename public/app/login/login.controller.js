@@ -16,13 +16,13 @@
 			AuthenticationService.Login(_this.formData, function (res){
 				if (res.data.success) {
 					AuthenticationService.SetCredentials(res.data.user);
-					$location.path('/dashboard/published/1');
+					$location.path('/dashboard/published');
 				} else if (res.data.status) {
 					_this.authenticationFailed = false;
 					_this.loginform = false;
 					_this.status = res.data.status;
 					_this.email = res.data.email;
-					console.log('');
+
 				} else if (res.data.authenticationFailed) {
 					_this.authenticationFailed = true;
 				}

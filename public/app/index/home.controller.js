@@ -1,15 +1,19 @@
 (function(app){
 
 	app.module.controller('HomeController', HomeController);
-	HomeController.$inject = ['$scope', '$rootScope', 'PostService', 'PagerService', "UserUpdateService"]
+	HomeController.$inject = ['$scope', '$rootScope', '$location','PostService', 'PagerService', "UserUpdateService"]
 
-	function HomeController($scope, $rootScope, PostService, PagerService, UserUpdateService ) {
-		const _this = this;
-		const path = window.location.pathname;
-		const splitPath = path.split('/');
-		const category = splitPath[1];
-		const catType = splitPath.pop();
+	function HomeController($scope, $rootScope, $location, PostService, PagerService, UserUpdateService ) {
+		var _this = this;
+		var queryObj = $location.search();
+		var path = window.location.pathname;
+		var splitPath = path.split('/');
+		var category = splitPath[1];
+		var catType = splitPath.pop();
+		var page  = queryObj.page;
+
 		this.posts = [];
+		this.category = PostService.category;
 
 		$rootScope.navActiveTab = 'home';
 		
@@ -19,35 +23,46 @@
 			PostService.list = $scope.posts;
 		});
 
-		var query = {};
+		if (page && !isNaN(page)) {
+			page = parseInt(page);
+		} else {
+			page = 1
+		}
+
+		var query = {
+			page: page
+		};
+
 		if (category == "author") {
 			query[category] = decodeURIComponent(catType.split("-").pop());
 		} else if (catType) {
 			query[category] = decodeURIComponent(catType);
 		}
-		
+
+		if (category == "category") {
+			this.catType = catType;
+		}
+
 		this.setPage = function (obj) {
 			if (obj.page < 1 || obj.page > _this.pager.totalItems) {
 				return;
 			}
 
-			_this.getPosts(obj.page);
-		}
-
-		this.getPosts = function (page) {
-			query.page = page || 1;
-			
-			PostService.getPosts(query, function (res) {
-				const data = res.data;
-	
-				if (data.success) {
-					_this.posts = $scope.posts = data.list;
-					_this.pager = PagerService.SetPage(page, data.totalPosts);
-				}
-				
+			$location.search({
+				page: obj.page
 			});
+
 		}
 
-		this.getPosts(1);
+		PostService.getPosts(query, function (res) {
+			var data = res.data;
+
+			if (data.success) {
+				_this.posts = $scope.posts = data.list;
+				_this.pager = PagerService.SetPage(page, data.totalPosts);
+			}
+			
+		});
+
 	}
 })(app);

@@ -49,7 +49,7 @@
             access: {
                 restricted: true
             }
-        })*/.when('/dashboard/:type/:pageNum', {
+        })*/.when('/dashboard/:type', {
             templateUrl: '/assets/app/dashboard/dashboard.html',
             controller: 'DashController',
 			controllerAs: 'DC',

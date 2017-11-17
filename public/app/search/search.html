@@ -1,3 +1,25 @@
+<div class="page-header-top">
+	<div class="container clearfix home-page-header-top">
+		<div class="btn-group pull-right" ng-class="{'open': SearchC.filterOpen}">
+			<button class="btn btn-default btn-sm dropdown-toggle" type="button" ng-click="SearchC.filterOpen = !SearchC.filterOpen">
+				Filter by category
+				<b ng-if="SearchC.catType">{{"- " +SearchC.catType}}</b>
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li>
+					<a href="/category/Uncategorized">Uncategorized</a>
+				</li>
+				<li ng-repeat="(i, obj) in SearchC.category">
+					<a href="/category/{{obj.category}}">{{obj.category}}</a>
+				</li>
+			</ul>
+		</div>
+		<div class="page-top-search">
+			<page-search search-query="{{SearchC.searchQuery}}"></page-search>
+		</div>
+	</div>
+</div>
 <div class="container">{{SearchC.avatar}}
 	<post-list posts="SearchC.posts"></post-list>
 	<pagination pager="SearchC.pager" set-page="SearchC.setPage({page: page})"></pagination>

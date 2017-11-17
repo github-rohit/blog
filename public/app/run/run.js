@@ -65,9 +65,7 @@
 		var params = routeObj.params || {};
 
 		if ( routeType === "dashboard") {
-			if ((params.type && params.pageNum) &&
-				(params.type === "published" || params.type === "draft") && !isNaN(params.pageNum)) {
-					
+			if (params.type === "published" || params.type === "draft") {
 				isroute = true
 			}
 		}
