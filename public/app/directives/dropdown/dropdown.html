@@ -1,0 +1,19 @@
+<div class="btn-group pull-right">
+	<button class="btn btn-default btn-sm dropdown-toggle" type="button">
+		<i class="fa fa-filter"></i>
+		<span ng-if="!value">Filter by category</span>
+		<b>{{value}}</b>
+		<span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu">
+		<li ng-if="value">
+			<a href="/">Clear</a>
+		</li>
+		<li>
+			<a href="/category/Uncategorized">Uncategorized</a>
+		</li>
+		<li ng-repeat="(i, obj) in items">
+			<a href="/category/{{obj.category}}">{{obj.category}}</a>
+		</li>
+	</ul>
+</div>

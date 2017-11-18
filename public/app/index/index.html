@@ -1,22 +1,10 @@
 <div class="page-header-top">
-	<div class="container clearfix home-page-header-top">
-		<div class="btn-group pull-right" ng-class="{'open': HC.filterOpen}">
-			<button class="btn btn-default btn-sm dropdown-toggle" type="button" ng-click="HC.filterOpen = !HC.filterOpen">
-				Filter by category
-				<b ng-if="HC.catType">{{"- " + HC.catType}}</b>
-				<span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu">
-				<li>
-					<a href="/category/Uncategorized">Uncategorized</a>
-				</li>
-				<li ng-repeat="(i, obj) in HC.category">
-					<a href="/category/{{obj.category}}">{{obj.category}}</a>
-				</li>
-			</ul>
-		</div>
-		<div class="page-top-search">
-			<page-search></page-search>
+	<div class="container">
+		<div class="clearfix home-page-header-top">
+			<dropdown items="HC.category" value="{{HC.catType}}"></dropdown>
+			<div class="page-top-search">
+				<page-search></page-search>
+			</div>
 		</div>
 	</div>
 </div>

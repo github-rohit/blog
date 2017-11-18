@@ -184,15 +184,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 /**/
 .page-header-top {
-	background: white;		
-	border-bottom: 1px solid #EAEAEA;
-	margin-bottom: 44px;
-	margin-top: -30px;
-}
-.page-header-top .container {
-	padding-top: 20px;
-	padding-bottom: 20px;
-	position: relative;
+	margin-bottom: 30px;
 }
 .page-header-top h1 {
 	font-weight: lighter;
@@ -213,6 +205,9 @@ h1, h2, h3, h4, h5, h6 {
 	bottom: -22px;
 }
 .home-page-header-top{
+	padding-bottom: 10px;
+	position: relative;
+	border-bottom: 1px solid #CCC;
 	cursor: text;
 }
 .home-page-header-top .page-top-search {
@@ -223,14 +218,18 @@ h1, h2, h3, h4, h5, h6 {
 .home-page-header-top .btn {
 	border-color: transparent;
 }
+.home-page-header-top .btn:not(:hover) {
+	background: transparent;
+}
 .home-page-header-top .page-top-search input {
-    padding-left: 15px;
+    padding-left: 0;
     padding-right: 15px;
     border: 0;
     outline: none;
     font-size: 24px;
     font-weight: lighter;
 	width: 100%;
+	background: transparent;
 }
 
 /*CARD*/
@@ -729,14 +728,19 @@ h1, h2, h3, h4, h5, h6 {
 /* TAB */
 .ui-tabs {
 	margin-bottom: 30px;
-}
-.ui-tabs>li>a {
-	color: #666;
-	border-bottom: 3px solid transparent;
+	border-bottom: 1px solid #CCC;
 }
 .ui-tabs>li {
 	float: left;
 	margin-bottom: -1px;
+	margin-right: 30px;
+}
+.ui-tabs>li>a {
+	padding-left: 0;
+	padding-right: 0;
+	padding-top: 0;
+	color: #666;
+	border-bottom: 1px solid transparent;
 }
 .ui-tabs>li>a.active {
 	color: #2980b9;
