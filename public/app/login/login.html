@@ -29,7 +29,8 @@
 							<input type="password" name="passwd" class="form-control" ng-model="LC.formData.passwd" ng-focus="onfocus($event)" ng-blur="onfocusOut($event)" placeholder="Password" required/>
 						</div>
 						<p class="text-danger form-error-msg">{{ formValidateMsg.required }}</p>
-					</div>		
+					</div>	
+					<honeypot ng-model="LC.formData.honeypot"></honeypot>	
 					<p class="text-center text-info">By logging in via any of the options below, you agree to our  Terms of Service.</p>
 					<input type="submit" class="btn btn-success btn-full" value="Log In" ng-disabled="login.$invalid"/>
 					</form>

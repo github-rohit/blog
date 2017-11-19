@@ -20,20 +20,6 @@
 			this.formValidateMsg = FormErrorService.messages;
 			this.userSuccess = false;
 			
-			var isgrecaptchajs = $interval(function(){
-				
-				try {
-					grecaptcha.render('gre-captcha', {
-					  'sitekey' : '6LciizMUAAAAAE0nWYFK33EmsDQ_L0M7TwyHULvz'
-					});	
-					
-					$interval.cancel(isgrecaptchajs);					
-				} catch (e) {
-					
-				}
-				
-			}, 2000);
-			
 			RegisterService.resetPassword({
 				url: URL_PARAM,
 				reqType: 'get'
@@ -57,10 +43,8 @@
 			});
 
 			this.submit = function() {
-				var g = grecaptcha.getResponse();
 				
-				if (!g) {
-					alert("The reCAPTCHA wasn't entered correctly.");
+				if (_this.formData.honeypot) {
 					return;
 				}
 				

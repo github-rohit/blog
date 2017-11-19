@@ -61,6 +61,7 @@ module.exports = function(grunt) {
                     '<%= dirs.src %>/app/directives/directive.js',
                     '<%= dirs.src %>/app/directives/search/search.directive.js',
                     '<%= dirs.src %>/app/directives/dropdown/dropdown.directive.js',
+                    '<%= dirs.src %>/app/directives/honeypot/honeypot.directive.js',
                     '<%= dirs.src %>/app/directives/loader/loader.directive.js',
                     '<%= dirs.src %>/app/directives/nav/nav.directive.js',
                     '<%= dirs.src %>/app/directives/list/list.directive.js',

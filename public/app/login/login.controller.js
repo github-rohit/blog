@@ -13,6 +13,11 @@
 		$rootScope.navActiveTab = 'login';
 
 		this.submit = function() {
+
+			if (_this.formData.honeypot) {
+				return;
+			}
+
 			AuthenticationService.Login(_this.formData, function (res){
 				if (res.data.success) {
 					AuthenticationService.SetCredentials(res.data.user);

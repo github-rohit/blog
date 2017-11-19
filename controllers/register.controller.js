@@ -211,7 +211,6 @@ module.exports =  (app) => {
         req.checkBody('email', 'required').notEmpty();
         req.checkBody('email', 'email').isEmail();
         req.checkBody('name', 'required').notEmpty();
-        req.checkBody('gender', 'required').notEmpty();
         req.checkBody('passwd', 'required').notEmpty();
         req.checkBody('passwdAgain', 'passwdAgain').equals(DATA.passwd);
 

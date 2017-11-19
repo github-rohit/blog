@@ -4,7 +4,7 @@
 		RegisterController.$inject = ['$scope', '$rootScope', '$http', '$interval', 'FormErrorService', 'RegisterService']
 
 		function RegisterController($scope, $rootScope, $http, $interval, FormErrorService, RegisterService) {
-			const self = this;
+			var _this = this;
 			this.formData = {
 				gender: ''
 			};
@@ -13,34 +13,24 @@
 			this.userSuccess = false;
 
 			$rootScope.navActiveTab = 'signup';
-
-			var isgrecaptchajs = $interval(function(){
-				grecaptcha.render('gre-captcha', {
-				  'sitekey' : '6LciizMUAAAAAE0nWYFK33EmsDQ_L0M7TwyHULvz'
-				});	
-				
-				$interval.cancel(isgrecaptchajs);
-				
-			}, 2000);
-
+			
 			this.submit = function() {
-				var g = grecaptcha.getResponse();
-				if (!g) {
-					alert("The reCAPTCHA wasn't entered correctly.");
+
+				if (_this.formData.honeypot) {
 					return;
 				}
 				
-				RegisterService.register(self.formData, function(res){
-					const data = res.data || {};
-					self.emailunameTaken = {};
-					self.userSuccess = false;
+				RegisterService.register(_this.formData, function(res){
+					var data = res.data || {};
+					_this.emailunameTaken = {};
+					_this.userSuccess = false;
 
 					if (data.errors) {
-						self.formError = FormErrorService.show(data.errors);
+						_this.formError = FormErrorService.show(data.errors);
 					} else if (data.error) {
-						self.emailunameTaken[data.error.name] = true;
+						_this.emailunameTaken[data.error.name] = true;
 					} else if (data.success) {
-						self.userSuccess = true;
+						_this.userSuccess = true;
 					}
 				});
 			};
