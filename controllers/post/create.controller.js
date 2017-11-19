@@ -12,7 +12,7 @@ const ACTION_TYPE = {
 
 module.exports =  function(app) {
 
-	app.post('/api/post/create', create);
+	app.post('/api/post/create', ensureAuthenticated, create);
 	app.post('/api/post/update', ensureAuthenticated, create);
 	//app.post('/api/post/publish', ensureAuthenticated, publish);
 
