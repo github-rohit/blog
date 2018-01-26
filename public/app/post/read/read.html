@@ -4,7 +4,7 @@
 			<div ng-if="BRC.post">
 				<div class=" ui-post-page">
 					<h1>{{BRC.post.title}}</h1>
-					<p class="byline"><strong>By</strong> <a href="/author/{{BRC.post.author[0].name | replaceSpaceWithDash}}-{{BRC.post.created_by}}">{{BRC.post.author[0].name}}</a> <i class="fa fa-circle"></i> {{BRC.post.date | amUtc | amDateFormat:'MMMM Do YYYY'}}</p>
+					<p class="byline"><strong>By</strong> <a href="/author/{{BRC.post.author[0].name | replaceSpaceWithDash}}-{{BRC.post.created_by}}">{{BRC.post.author[0].name}}</a> <i class="fa fa-circle"></i> {{BRC.post.created_on | date: date: 'MMM d, y'}}</p>
 					<hr>
 					<div class="description">
 						<img ng-src="{{BRC.post.image}}">
@@ -20,7 +20,7 @@
 						<ul class="list-unstyled">
 							<li ng-repeat="item in BRC.comments.list">
 								<p>{{item.comment}}</p>
-								<div class="byline"><strong>By</strong> <a href="/author/{{item.author[0].name | replaceSpaceWithDash}}-{{item.created_by}}">{{item.author[0].name}}</a> <i class="fa fa-circle"></i> {{BRC.post.date | amUtc | amDateFormat:'MMMM Do YYYY'}}</div>
+								<div class="byline"><strong>By</strong> <a href="/author/{{item.author[0].name | replaceSpaceWithDash}}-{{item.created_by}}">{{item.author[0].name}}</a> <i class="fa fa-circle"></i> {{BRC.post.created_on | date: 'MMM d, y'}}</div>
 							</li>
 						</ul>
 					</div>

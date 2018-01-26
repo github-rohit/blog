@@ -24,9 +24,10 @@ const dbSchema = new Schema({
 		type: mongoose.Schema.ObjectId,
 		required: true
 	}, 
-	date: {
+	created_on: {
 		type: Date,
-		required: true
+		required: true,
+		default: new Date()
 	},
 	status: {
 		type: String,

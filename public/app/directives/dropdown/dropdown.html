@@ -9,9 +9,6 @@
 		<li ng-if="value">
 			<a href="/">Clear</a>
 		</li>
-		<li>
-			<a href="/category/Uncategorized">Uncategorized</a>
-		</li>
 		<li ng-repeat="(i, obj) in items">
 			<a href="/category/{{obj.category}}">{{obj.category}}</a>
 		</li>

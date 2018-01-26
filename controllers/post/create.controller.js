@@ -34,7 +34,7 @@ function validateData (req) {
 		
 		req.checkBody('description', 'required').notEmpty();
 		req.checkBody('owner', 'required').notEmpty();
-		req.checkBody('date', 'required').notEmpty();
+		req.checkBody('created_on', 'required').notEmpty();
 		
 		const errors = req.validationErrors();
 		
@@ -73,7 +73,7 @@ function create (req, res, next) {
 			category: data.category,
 			tags: data.tags,
 			created_by: data.owner,
-			date: data.date,
+			created_on: data.date,
 			status: NEW_STATUS,
 			schedule_at: data.schedule_at
 		};

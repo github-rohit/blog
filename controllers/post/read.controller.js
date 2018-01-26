@@ -18,7 +18,7 @@ module.exports =  (app) => {
 		
 		const aQUERY = [{
 			$sort: {
-				date: -1
+				created_on: -1
 			}
 		}, {
 			$skip : skip
@@ -41,7 +41,7 @@ module.exports =  (app) => {
 				"created_by": 1,
 				"status": 1,
 				"author.name": 1,
-				"date": 1,
+				"created_on": 1,
 				"post_reference_id": 1
 			}
 		}];
