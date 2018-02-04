@@ -44,7 +44,6 @@
 		<div class="col-md-3 col-sm-3 ui-right-block">
 			<h4>Categories</h4>
 			<ul class="ui-post-cat">
-				<li><a href="/category/Uncategorized">Uncategorized</a></li>
 				<li ng-repeat="(i, obj) in BRC.category"><a href="/category/{{obj.category}}">{{obj.category}}</a></li>
 			</ul>
 			<h4 ng-if="BRC.post.tags.length">Tags</h4>

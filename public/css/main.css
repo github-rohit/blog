@@ -397,14 +397,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 .ui-list li h2.post-title {
 	margin-top: 0;
-	color: #3F3F3F;
+	margin-bottom: 4px;
 	text-decoration: none;
 	font-size: 1.7em;
 	line-height: 1.45;
 }
 .ui-list li h2.post-title a {
-	color: #3F3F3F;
 	text-decoration: none;
+}
+.ui-list li h2.post-title a:not(:hover) {
+	color: #3F3F3F;
+}
+.ui-list li .description .thumb {
+	max-height: 150px;
 }
 .ui-list li .byline,
 .ui-post-page .byline,
@@ -419,8 +424,14 @@ h1, h2, h3, h4, h5, h6 {
 	vertical-align: middle;
 	margin: 0 5px;
 }
+.ui-list li .byline a:not(:hover),
+.ui-post-page .byline a:not(:hover),
+.ui-add-comment .byline a:not(:hover) {
+	color: #666;
+}
 .ui-list li .description {
 	font-size: 16px;
+	font-weight: 300;
 }
 .ui-list li .tags .fa {
 	opacity: .34;
@@ -496,11 +507,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 .ui-post-page h1 {
 	margin-top: 0;
+	margin-bottom: 0;
+	font-size: 2em;
+	line-height: 1.5em;
 }
 .ui-post-page .description {
 	font-size: 16px;
 	line-height: 1.7;
-	color: #666;
+	color: #303030;
+	font-weight: 300;
 }
 .ui-post-page .description p {
 	margin-bottom: 20px;
