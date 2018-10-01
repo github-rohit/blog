@@ -7,3 +7,4 @@ public/fonts
 config/config.json
 .vscode
 .DS_store
+package-lock.json
